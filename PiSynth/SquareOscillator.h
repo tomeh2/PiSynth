@@ -16,9 +16,9 @@ private:		//Contains sgn function for now. Will probably be implemented in a sep
 	}
 
 public:
-	SquareOscillator(int, float);
+	SquareOscillator(int sampleRate, float frequency);
 	~SquareOscillator();
 
-	float process();
+	float process(float input);
 };
 

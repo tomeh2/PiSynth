@@ -14,6 +14,9 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Debugging</Filter>
     </ClCompile>
+    <ClCompile Include="Operator.cpp">
+      <Filter>Signal Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Oscillators">
@@ -42,5 +45,11 @@
     <ClInclude Include="Logger.h">
       <Filter>Debugging</Filter>
     </ClInclude>
+    <ClInclude Include="Operator.h">
+      <Filter>Signal Generators</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Notes.txt" />
   </ItemGroup>
 </Project>

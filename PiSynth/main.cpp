@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "WaveGenerator.h"
+#include "Operator.h"
 #include "Logger.h"
 
 #include <fstream>
@@ -34,13 +34,13 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(WaveGenerator* wg)
+float* render(Operator* op1, Operator* op2)
 {
 	float* samples = new float[441000];
 
 	for (int i = 0; i < 441000; i++)
 	{
-		samples[i] = wg->getNextSample();
+		samples[i] = op1->getNextSample(op2->getNextSample(0.0f));
 	}
 
 	return samples;
@@ -48,9 +48,13 @@ float* render(WaveGenerator* wg)
 
 int main()
 {
-	WaveGenerator waveGenerator(44100);
+	Operator op1(44100);
+	Operator op2(44100);
 
-	waveGenerator.setOscillatorType(SQUARE_WAVE);
+	op1.setWaveform(SINE_WAVE);
+	op1.setFrequency(440.0f);
+	op2.setWaveform(SINE_WAVE);
+	op2.setFrequency(440.0f);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -63,7 +67,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 
-	float* samples = render(&waveGenerator);
+	float* samples = render(&op1, &op2);
 	char* data = format(samples, 441000);
 
 	auto end = chrono::high_resolution_clock::now();

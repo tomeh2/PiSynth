@@ -18,9 +18,9 @@ WaveGenerator::~WaveGenerator()
 /**
 Calculates the next sample and returns it's value.
 */
-float WaveGenerator::getNextSample()
+float WaveGenerator::getNextSample(float input)
 {
-	this->oscillator->process();
+	this->oscillator->process(input);
 }
 
 void WaveGenerator::setOscillatorType(Waveform waveform)

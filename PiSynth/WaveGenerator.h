@@ -24,7 +24,7 @@ public:
 	WaveGenerator(int sampleRate);
 	~WaveGenerator();
 
-	float getNextSample();
+	float getNextSample(float input);
 	void setOscillatorType(Waveform waveform);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);

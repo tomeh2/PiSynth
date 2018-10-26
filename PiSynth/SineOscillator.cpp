@@ -10,9 +10,9 @@ SineOscillator::~SineOscillator()
 {
 }
 
-float SineOscillator::process()
+float SineOscillator::process(float input)
 {
-	float sample = sin(this->time);
+	float sample = sin(this->time + input);
 	this->update();
 	return sample;
 }

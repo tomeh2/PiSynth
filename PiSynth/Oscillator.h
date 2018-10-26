@@ -29,7 +29,7 @@ protected:
 			this->time -= TWO_PI;
 	}
 public:
-	virtual float process() = 0;		//this is the function that implements the signal generation
+	virtual float process(float input) = 0;		//this is the function that implements the signal generation
 	
 	void setFrequency(float newFrequency)
 	{

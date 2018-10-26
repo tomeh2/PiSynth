@@ -10,9 +10,9 @@ SquareOscillator::~SquareOscillator()
 {
 }
 
-float SquareOscillator::process()
+float SquareOscillator::process(float input)
 {
-	float sample = sgn(sin(this->time));
+	float sample = sgn(sin(this->time + input));
 	this->update();
 	return sample;
 }

@@ -1,0 +1,4 @@
+- Install RtMidi library for MIDI I/O
+
+
+- Phase modulation only works for Sine Oscillators (so that it behaves like FM), not for any other

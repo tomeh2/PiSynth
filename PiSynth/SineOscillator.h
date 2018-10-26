@@ -8,5 +8,5 @@ public:
 	SineOscillator(int, float);
 	~SineOscillator();
 	
-	float process();
+	float process(float input);
 };
