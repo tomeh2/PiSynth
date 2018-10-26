@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="SineOscillator.cpp">
+      <Filter>Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareOscillator.cpp">
+      <Filter>Oscillators</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveGenerator.cpp">
+      <Filter>Signal Generators</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Debugging</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Oscillators">
+      <UniqueIdentifier>{2eb342ec-9c5b-491c-b04a-118a042de81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generators">
+      <UniqueIdentifier>{c48b723e-7534-4058-b9a8-399158e831c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debugging">
+      <UniqueIdentifier>{6b2be892-c83a-4d6c-9344-7cc9aeb5c33f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Oscillator.h">
+      <Filter>Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="SineOscillator.h">
+      <Filter>Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareOscillator.h">
+      <Filter>Oscillators</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveGenerator.h">
+      <Filter>Signal Generators</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Debugging</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
