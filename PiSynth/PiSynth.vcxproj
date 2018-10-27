@@ -75,17 +75,24 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Cascade.cpp" />
+    <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
     <ClCompile Include="WaveGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Cascade.h" />
+    <ClInclude Include="Feedback.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Oscillator.h" />
+    <ClInclude Include="Parallel.h" />
     <ClInclude Include="SineOscillator.h" />
     <ClInclude Include="SquareOscillator.h" />
     <ClInclude Include="WaveGenerator.h" />

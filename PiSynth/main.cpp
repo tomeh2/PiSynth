@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "Operator.h"
+#include "Cascade.h"
+#include "Parallel.h"
 #include "Logger.h"
 
 #include <fstream>
@@ -34,13 +36,13 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Operator* op1, Operator* op2)
+float* render(Parallel* cascade)
 {
 	float* samples = new float[441000];
 
 	for (int i = 0; i < 441000; i++)
 	{
-		samples[i] = op1->getNextSample(op2->getNextSample(0.0f));
+		samples[i] = cascade->getNextSample(0.0f);
 	}
 
 	return samples;
@@ -50,11 +52,24 @@ int main()
 {
 	Operator op1(44100);
 	Operator op2(44100);
+	Operator op3(44100);
+
+	Block* b1 = &op1;
+	Block* b2 = &op2;
+	Block* b3 = &op3;
 
 	op1.setWaveform(SINE_WAVE);
-	op1.setFrequency(440.0f);
+	op1.setFrequency(400.0f);
 	op2.setWaveform(SINE_WAVE);
-	op2.setFrequency(440.0f);
+	op2.setFrequency(200.0f);
+	op3.setWaveform(SINE_WAVE);
+	op3.setFrequency(100.0f);
+
+	Parallel alg;
+
+	alg.addBlock(b1);
+	alg.addBlock(b2);
+	alg.addBlock(b3);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -66,8 +81,8 @@ int main()
 	}
 
 	auto start = chrono::high_resolution_clock::now();
-
-	float* samples = render(&op1, &op2);
+	
+	float* samples = render(&alg);
 	char* data = format(samples, 441000);
 
 	auto end = chrono::high_resolution_clock::now();

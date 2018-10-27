@@ -3,50 +3,77 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SineOscillator.cpp">
-      <Filter>Oscillators</Filter>
+      <Filter>Signal Generation\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="SquareOscillator.cpp">
-      <Filter>Oscillators</Filter>
-    </ClCompile>
-    <ClCompile Include="WaveGenerator.cpp">
-      <Filter>Signal Generators</Filter>
+      <Filter>Signal Generation\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Debugging</Filter>
     </ClCompile>
     <ClCompile Include="Operator.cpp">
-      <Filter>Signal Generators</Filter>
+      <Filter>Signal Generation\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="WaveGenerator.cpp">
+      <Filter>Signal Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="Parallel.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="Feedback.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="Cascade.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Oscillators">
-      <UniqueIdentifier>{2eb342ec-9c5b-491c-b04a-118a042de81f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Signal Generators">
-      <UniqueIdentifier>{c48b723e-7534-4058-b9a8-399158e831c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debugging">
       <UniqueIdentifier>{6b2be892-c83a-4d6c-9344-7cc9aeb5c33f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation">
+      <UniqueIdentifier>{d519364e-7708-4c13-84bd-b6f1c1a19ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation\Oscillators">
+      <UniqueIdentifier>{2eb342ec-9c5b-491c-b04a-118a042de81f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation\Algorithm">
+      <UniqueIdentifier>{dab80382-20ba-4369-848e-9d8ff7df4c1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation\Algorithm\Algorithm Generation">
+      <UniqueIdentifier>{5afb02de-0a11-4daf-9474-b0276b8af98c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Oscillator.h">
-      <Filter>Oscillators</Filter>
+      <Filter>Signal Generation\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="SineOscillator.h">
-      <Filter>Oscillators</Filter>
+      <Filter>Signal Generation\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="SquareOscillator.h">
-      <Filter>Oscillators</Filter>
-    </ClInclude>
-    <ClInclude Include="WaveGenerator.h">
-      <Filter>Signal Generators</Filter>
+      <Filter>Signal Generation\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Debugging</Filter>
     </ClInclude>
     <ClInclude Include="Operator.h">
-      <Filter>Signal Generators</Filter>
+      <Filter>Signal Generation\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveGenerator.h">
+      <Filter>Signal Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Parallel.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Feedback.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Cascade.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
