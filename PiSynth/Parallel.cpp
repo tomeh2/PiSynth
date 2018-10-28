@@ -1,4 +1,5 @@
 #include "Parallel.h"
+#include "Logger.h"
 
 Parallel::Parallel()
 {
@@ -12,7 +13,10 @@ Parallel::~Parallel()
 
 void Parallel::addBlock(Block* block)
 {
-	this->elements->insert(this->elements->begin(), block);
+	if (block == nullptr)
+		Logger::print("Parallel -> Tried to pass a null pointer as a block when adding an element!");
+	else
+		this->elements->insert(this->elements->begin(), block);
 }
 
 float Parallel::getNextSample(float input)

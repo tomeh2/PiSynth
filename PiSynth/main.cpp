@@ -3,7 +3,9 @@
 #include "Operator.h"
 #include "Cascade.h"
 #include "Parallel.h"
+#include "Feedback.h"
 #include "Logger.h"
+#include "AlgorithmGenerator.h"
 
 #include <fstream>
 #include <chrono>
@@ -36,7 +38,7 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Parallel* cascade)
+float* render(Feedback* cascade)
 {
 	float* samples = new float[441000];
 
@@ -50,6 +52,8 @@ float* render(Parallel* cascade)
 
 int main()
 {
+	AlgorithmGenerator::generateAlgorithmFromString("c(1,p(2,f(3),4),c(5,f(6)),7,8)", 8);
+	/*
 	Operator op1(44100);
 	Operator op2(44100);
 	Operator op3(44100);
@@ -65,11 +69,9 @@ int main()
 	op3.setWaveform(SINE_WAVE);
 	op3.setFrequency(100.0f);
 
-	Parallel alg;
+	Feedback fb;
 
-	alg.addBlock(b1);
-	alg.addBlock(b2);
-	alg.addBlock(b3);
+	fb.setBlock(&op1);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -82,7 +84,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 	
-	float* samples = render(&alg);
+	float* samples = render(&fb);
 	char* data = format(samples, 441000);
 
 	auto end = chrono::high_resolution_clock::now();
@@ -99,5 +101,7 @@ int main()
 	delete[] data;
 
 	cin.get();
-	return 0;
+	return 0;*/
+
+	cin.get();
 }

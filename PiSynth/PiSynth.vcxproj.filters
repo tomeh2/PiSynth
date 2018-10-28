@@ -17,14 +17,17 @@
     <ClCompile Include="WaveGenerator.cpp">
       <Filter>Signal Generation</Filter>
     </ClCompile>
-    <ClCompile Include="Parallel.cpp">
-      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
-    </ClCompile>
-    <ClCompile Include="Feedback.cpp">
+    <ClCompile Include="AlgorithmGenerator.cpp">
       <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClCompile>
     <ClCompile Include="Cascade.cpp">
-      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="Feedback.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="Parallel.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +45,9 @@
     </Filter>
     <Filter Include="Signal Generation\Algorithm\Algorithm Generation">
       <UniqueIdentifier>{5afb02de-0a11-4daf-9474-b0276b8af98c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation\Algorithm\Algorithm Generation\Structures">
+      <UniqueIdentifier>{a4a7766e-dc30-49b6-9af3-7d3770933cea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,17 +69,20 @@
     <ClInclude Include="WaveGenerator.h">
       <Filter>Signal Generation</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
+    <ClInclude Include="AlgorithmGenerator.h">
       <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClInclude>
     <ClInclude Include="Parallel.h">
-      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
     </ClInclude>
-    <ClInclude Include="Feedback.h">
-      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    <ClInclude Include="Block.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
     </ClInclude>
     <ClInclude Include="Cascade.h">
-      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Feedback.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

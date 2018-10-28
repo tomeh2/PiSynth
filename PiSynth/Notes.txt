@@ -2,3 +2,7 @@
 
 
 - Phase modulation only works for Sine Oscillators (so that it behaves like FM), not for any other
+
+- Seg fault when destructor of Feedback is called
+
+- For loop in algorithm generator sometimes doesn't execute for whatever reason
