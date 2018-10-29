@@ -38,11 +38,11 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Feedback* cascade)
+float* render(Block* cascade)
 {
 	float* samples = new float[441000];
 
-	for (int i = 0; i < 441000; i++)
+	for (int i = 0; i < 0; i++)
 	{
 		samples[i] = cascade->getNextSample(0.0f);
 	}
@@ -52,26 +52,9 @@ float* render(Feedback* cascade)
 
 int main()
 {
-	AlgorithmGenerator::generateAlgorithmFromString("c(1,p(2,f(3),4),c(5,f(6)),7,8)", 8);
-	/*
-	Operator op1(44100);
-	Operator op2(44100);
-	Operator op3(44100);
+	Block* b = AlgorithmGenerator::generateAlgorithmFromString(44100, "c(1,2)", 2);
 
-	Block* b1 = &op1;
-	Block* b2 = &op2;
-	Block* b3 = &op3;
-
-	op1.setWaveform(SINE_WAVE);
-	op1.setFrequency(400.0f);
-	op2.setWaveform(SINE_WAVE);
-	op2.setFrequency(200.0f);
-	op3.setWaveform(SINE_WAVE);
-	op3.setFrequency(100.0f);
-
-	Feedback fb;
-
-	fb.setBlock(&op1);
+	b->getNextSample(0.0f);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -84,7 +67,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 	
-	float* samples = render(&fb);
+	float* samples = render(b);
 	char* data = format(samples, 441000);
 
 	auto end = chrono::high_resolution_clock::now();
@@ -101,7 +84,7 @@ int main()
 	delete[] data;
 
 	cin.get();
-	return 0;*/
+	return 0;
 
 	cin.get();
 }

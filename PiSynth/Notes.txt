@@ -5,4 +5,5 @@
 
 - Seg fault when destructor of Feedback is called
 
-- For loop in algorithm generator sometimes doesn't execute for whatever reason
+- Redesign: Remove block header completely. Since only operators are used in the structures anyway Block.h is useless.
+- Do something about the horrible use of pointers

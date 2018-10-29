@@ -29,6 +29,9 @@
     <ClCompile Include="Parallel.cpp">
       <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
     </ClCompile>
+    <ClCompile Include="Algorithm.cpp">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debugging">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="Feedback.h">
       <Filter>Signal Generation\Algorithm\Algorithm Generation\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm.h">
+      <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

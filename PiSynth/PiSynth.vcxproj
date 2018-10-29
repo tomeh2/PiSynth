@@ -75,6 +75,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="AlgorithmGenerator.cpp" />
     <ClCompile Include="Cascade.cpp" />
     <ClCompile Include="Feedback.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="WaveGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm.h" />
     <ClInclude Include="AlgorithmGenerator.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cascade.h" />
