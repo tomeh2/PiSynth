@@ -1,9 +1,7 @@
 #include <iostream>
 
-#include "Operator.h"
-#include "Cascade.h"
-#include "Parallel.h"
-#include "Feedback.h"
+#include "Algorithm.h"
+
 #include "Logger.h"
 #include "AlgorithmGenerator.h"
 
@@ -38,13 +36,13 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Block* cascade)
+float* render(Algorithm* cascade)
 {
 	float* samples = new float[441000];
 
 	for (int i = 0; i < 0; i++)
 	{
-		samples[i] = cascade->getNextSample(0.0f);
+		samples[i] = cascade->getNextSample();
 	}
 
 	return samples;
@@ -52,9 +50,10 @@ float* render(Block* cascade)
 
 int main()
 {
-	Block* b = AlgorithmGenerator::generateAlgorithmFromString(44100, "c(1,2)", 2);
+	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(44100, "c(1,2)", 2);
 
-	b->getNextSample(0.0f);
+	alg->getOperators()[0]->setFrequency(400.0f);
+	alg->getOperators()[1]->setFrequency(200.0f);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -67,7 +66,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 	
-	float* samples = render(b);
+	float* samples = render(alg);
 	char* data = format(samples, 441000);
 
 	auto end = chrono::high_resolution_clock::now();
@@ -80,6 +79,7 @@ int main()
 
 	out.close();
 
+	delete alg;
 	delete[] samples;
 	delete[] data;
 

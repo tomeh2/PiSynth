@@ -8,20 +8,21 @@
 #include <iostream>
 #include <sstream>
 
-Block* AlgorithmGenerator::generateAlgorithmFromString(int sampleRate, std::string algDescription, int operatorCount)
+Algorithm* AlgorithmGenerator::generateAlgorithmFromString(int sampleRate, std::string algDescription, int operatorCount)
 {
-	Operator* operators[operatorCount];
+	Operator** operators = new Operator*[operatorCount];
 
 	for (int i = 0; i < operatorCount; i++)
 		operators[i] = new Operator(sampleRate);
 
-	std::cout << "Address: " << operators[0] << "\n";
-	std::cout << "Address: " << operators[1] << "\n";
+	Algorithm* alg = new Algorithm(operators, generateAlgorithm(operators, algDescription), operatorCount);
 
-	return generateAlgorithm(*operators, algDescription);
+	alg->getNextSample();
+
+	return alg;
 } 
 
-Block* AlgorithmGenerator::generateAlgorithm(Operator* operators, std::string algDescription)
+Block* AlgorithmGenerator::generateAlgorithm(Operator** operators, std::string algDescription)
 {
 	char command = algDescription.at(0);
 	algDescription = algDescription.substr(2, algDescription.size() - 3);
@@ -35,43 +36,45 @@ Block* AlgorithmGenerator::generateAlgorithm(Operator* operators, std::string al
 			for (std::string arg : args)
 			{
 				if (isPositiveNumber(arg))
-					cascade->addBlock((Block*)&operators[strToPositiveNum(arg) - 1]);
+					cascade->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
 				else
 					generateAlgorithm(operators, arg);
 			}
 			return (Block*)cascade;
 		}
+		break;
 	case 'p':		//PARALLEL
 		{
 			Parallel* parallel = new Parallel();
 			for (std::string arg : args)
 			{
 				if (isPositiveNumber(arg))
-					parallel->addBlock((Block*)&operators[strToPositiveNum(arg) - 1]);
+					parallel->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
 				else
 					generateAlgorithm(operators, arg);
 			}
-			//return (Block*)&parallel;
+			return (Block*)parallel;
 		}
+		break;
 	case 'f':		//FEEDBACK
 		{
 			Feedback* feedback = new Feedback();
 			for (std::string arg : args)
 			{
 				if (isPositiveNumber(arg))
-					feedback->setBlock((Block*)&operators[strToPositiveNum(arg) - 1]);
+					feedback->setBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
 				else
 					generateAlgorithm(operators, arg);
 			}
-			//return (Block*)&feedback;
+			return (Block*)feedback;
 		}	
+		break;
 	default:
 		{
 			Logger::print("AlgorithmGenerator -> command not recognized!");
-			//return nullptr;
 		}
 	}
-	//return nullptr;
+	return nullptr;
 }
 
 bool AlgorithmGenerator::isPositiveNumber(std::string str)
