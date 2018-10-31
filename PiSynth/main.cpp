@@ -8,6 +8,9 @@
 #include <fstream>
 #include <chrono>
 
+#define SR 88200
+#define SAMPLES 882000
+
 using namespace std;
 
 void test()
@@ -38,9 +41,9 @@ char* format(float* nums, int size)
 
 float* render(Algorithm* cascade)
 {
-	float* samples = new float[441000];
+	float* samples = new float[SAMPLES];
 
-	for (int i = 0; i < 441000; i++)
+	for (int i = 0; i < SAMPLES; i++)
 	{
 		samples[i] = cascade->getNextSample();
 	}
@@ -50,11 +53,12 @@ float* render(Algorithm* cascade)
 
 int main()
 {
-	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(44100, "p(f(1),f(2))", 2);
+	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(SR, "p(c(1,2),c(3,4))", 4);
 
 	alg->getOperators()[0]->setFrequency(1000.0f);
-	alg->getOperators()[1]->setFrequency(5000.0f);
-
+	alg->getOperators()[1]->setFrequency(1000.0f);
+	alg->getOperators()[2]->setFrequency(2000.0f);
+	alg->getOperators()[3]->setFrequency(2000.0f);
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 
@@ -68,7 +72,7 @@ int main()
 	auto start = chrono::high_resolution_clock::now();
 	
 	float* samples = render(alg);
-	char* data = format(samples, 441000);
+	char* data = format(samples, SAMPLES);
 
 	auto end = chrono::high_resolution_clock::now();
 	auto dur = end - start;
@@ -76,7 +80,7 @@ int main()
 
 	cout << "Time Elapsed: " << ms << " ms\n";
 
-	out.write(data, 882000);
+	out.write(data, SAMPLES);
 
 	out.close();
 
