@@ -2,7 +2,7 @@
 
 #include "Block.h"
 
-class Feedback
+class Feedback : public Block
 {
 private:
 	Block* block = nullptr;

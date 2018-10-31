@@ -7,7 +7,7 @@ Feedback::Feedback()
 
 Feedback::~Feedback()
 {
-	delete this->block;
+	//delete this->block;
 }
 
 void Feedback::setBlock(Block* block)

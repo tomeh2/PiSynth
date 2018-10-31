@@ -5,7 +5,6 @@
 #include "Feedback.h"
 #include "Logger.h"
 
-#include <iostream>
 #include <sstream>
 
 Algorithm* AlgorithmGenerator::generateAlgorithmFromString(int sampleRate, std::string algDescription, int operatorCount)
@@ -16,8 +15,6 @@ Algorithm* AlgorithmGenerator::generateAlgorithmFromString(int sampleRate, std::
 		operators[i] = new Operator(sampleRate);
 
 	Algorithm* alg = new Algorithm(operators, generateAlgorithm(operators, algDescription), operatorCount);
-
-	alg->getNextSample();
 
 	return alg;
 } 
@@ -31,31 +28,29 @@ Block* AlgorithmGenerator::generateAlgorithm(Operator** operators, std::string a
 	switch (command)
 	{
 	case 'c':		//CASCADE
+	{
+		Cascade* cascade = new Cascade();
+		for (std::string arg : args)
 		{
-			Cascade* cascade = new Cascade();
-			for (std::string arg : args)
-			{
-				if (isPositiveNumber(arg))
-					cascade->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
-				else
-					generateAlgorithm(operators, arg);
-			}
-			return (Block*)cascade;
+			if (isPositiveNumber(arg))
+				cascade->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
+			else
+				cascade->addBlock(generateAlgorithm(operators, arg));
 		}
-		break;
+		return (Block*)cascade;
+	}
 	case 'p':		//PARALLEL
+	{
+		Parallel* parallel = new Parallel();
+		for (std::string arg : args)
 		{
-			Parallel* parallel = new Parallel();
-			for (std::string arg : args)
-			{
-				if (isPositiveNumber(arg))
-					parallel->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
-				else
-					generateAlgorithm(operators, arg);
-			}
-			return (Block*)parallel;
+			if (isPositiveNumber(arg))
+				parallel->addBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
+			else
+				parallel->addBlock(generateAlgorithm(operators, arg));
 		}
-		break;
+		return (Block*)parallel;
+	}
 	case 'f':		//FEEDBACK
 		{
 			Feedback* feedback = new Feedback();
@@ -64,11 +59,10 @@ Block* AlgorithmGenerator::generateAlgorithm(Operator** operators, std::string a
 				if (isPositiveNumber(arg))
 					feedback->setBlock(static_cast<Block*>(operators[strToPositiveNum(arg) - 1]));
 				else
-					generateAlgorithm(operators, arg);
+					feedback->setBlock(generateAlgorithm(operators, arg));
 			}
 			return (Block*)feedback;
 		}	
-		break;
 	default:
 		{
 			Logger::print("AlgorithmGenerator -> command not recognized!");

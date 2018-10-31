@@ -28,7 +28,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 10000.0f);
+		int sample = (int)(nums[i] * 2000.0f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -40,7 +40,7 @@ float* render(Algorithm* cascade)
 {
 	float* samples = new float[441000];
 
-	for (int i = 0; i < 0; i++)
+	for (int i = 0; i < 441000; i++)
 	{
 		samples[i] = cascade->getNextSample();
 	}
@@ -50,10 +50,11 @@ float* render(Algorithm* cascade)
 
 int main()
 {
-	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(44100, "c(1,2)", 2);
+	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(44100, "p(f(1),f(2))", 2);
 
-	alg->getOperators()[0]->setFrequency(400.0f);
-	alg->getOperators()[1]->setFrequency(200.0f);
+	alg->getOperators()[0]->setFrequency(1000.0f);
+	alg->getOperators()[1]->setFrequency(5000.0f);
+
 
 	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
 

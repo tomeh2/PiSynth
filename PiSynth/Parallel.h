@@ -4,7 +4,7 @@
 
 #include <vector>
 
-class Parallel
+class Parallel : public Block
 {
 private:
 	std::vector<Block*>* elements;

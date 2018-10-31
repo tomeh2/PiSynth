@@ -1,7 +1,5 @@
 #include "Algorithm.h"
 
-#include <iostream>
-
 Algorithm::Algorithm(Operator** operators, Block* algorithm, int operatorCount)
 {
 	this->operators = operators;
@@ -21,7 +19,6 @@ Algorithm::~Algorithm()
 
 float Algorithm::getNextSample()
 {
-	std::cout << "Alg addr: " << algorithm << "\n";
 	return this->algorithm->getNextSample(0.0f);
 }
 
