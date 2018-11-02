@@ -55,3 +55,13 @@ void WaveGenerator::setDetuneFrequency(float newDetuneFrequency)
 {
 	this->oscillator->setDetuneFrequency(newDetuneFrequency);
 }
+
+float WaveGenerator::getFrequency()
+{
+	return this->oscillator->getFrequency();
+}
+
+float WaveGenerator::getDetuneFrequency()
+{
+	return this->oscillator->getDetuneFrequency();
+}

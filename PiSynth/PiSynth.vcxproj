@@ -85,6 +85,7 @@
     <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
+    <ClCompile Include="Voice.cpp" />
     <ClCompile Include="WaveGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,7 @@
     <ClInclude Include="Parallel.h" />
     <ClInclude Include="SineOscillator.h" />
     <ClInclude Include="SquareOscillator.h" />
+    <ClInclude Include="Voice.h" />
     <ClInclude Include="WaveGenerator.h" />
   </ItemGroup>
   <ItemGroup>

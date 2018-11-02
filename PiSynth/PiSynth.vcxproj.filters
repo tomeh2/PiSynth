@@ -32,6 +32,9 @@
     <ClCompile Include="Algorithm.cpp">
       <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
     </ClCompile>
+    <ClCompile Include="Voice.cpp">
+      <Filter>SynthEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debugging">
@@ -51,6 +54,9 @@
     </Filter>
     <Filter Include="Signal Generation\Algorithm\Algorithm Generation\Structures">
       <UniqueIdentifier>{a4a7766e-dc30-49b6-9af3-7d3770933cea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SynthEngine">
+      <UniqueIdentifier>{3ce3ef23-aa1d-4f7b-9012-8a3511b048cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="Algorithm.h">
       <Filter>Signal Generation\Algorithm\Algorithm Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Voice.h">
+      <Filter>SynthEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

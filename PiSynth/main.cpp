@@ -60,7 +60,7 @@ int main()
 	alg->getOperators()[2]->setFrequency(2000.0f);
 	alg->getOperators()[3]->setFrequency(2000.0f);
 
-	ofstream out("/home/pi/Desktop/data.bin", ios::out | ios::binary);
+	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
 	if (!out.is_open())
 	{

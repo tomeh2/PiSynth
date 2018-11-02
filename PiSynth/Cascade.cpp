@@ -1,5 +1,6 @@
 #include "Cascade.h"
 #include "Logger.h"
+#include "Operator.h"
 
 Cascade::Cascade()
 {

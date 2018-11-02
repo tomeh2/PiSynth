@@ -1,4 +1,5 @@
 #include "Feedback.h"
+#include "Logger.h"
 
 Feedback::Feedback()
 {
@@ -7,13 +8,15 @@ Feedback::Feedback()
 
 Feedback::~Feedback()
 {
-	//delete this->block;
+	delete this->block;
 }
 
 void Feedback::setBlock(Block* block)
 {
 	if (this->block == nullptr)
 		this->block = block;
+	else
+		Logger::print("Feedback -> Tried to set a null pointer as a block!");
 }
 
 float Feedback::getNextSample(float input)
