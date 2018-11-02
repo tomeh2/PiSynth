@@ -6,8 +6,6 @@ WaveGenerator::WaveGenerator(int sampleRate)
 	this->sampleRate = sampleRate;
 
 	this->setOscillatorType(SINE_WAVE);
-
-	Logger::print("WaveGenerator -> Initialization successful!");
 }
 
 WaveGenerator::~WaveGenerator()

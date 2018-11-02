@@ -29,6 +29,8 @@ void Voice::keyDown(int keyNum)
 {
 	tempVol = 1.0f;
 
+	Logger::print(std::string("Key Pressed!"));
+
 	if (keyNum > 0 && keyNum <= 88)
 	{
 		int opCount = this->algorithm->getOperatorCount();
@@ -43,5 +45,7 @@ void Voice::keyDown(int keyNum)
 
 void Voice::keyUp()
 {
+	Logger::print(std::string("Key Released!"));
+
 	tempVol = 0.0f;
 }
