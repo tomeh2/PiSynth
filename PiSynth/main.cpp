@@ -1,9 +1,9 @@
 #include <iostream>
 
 #include "Algorithm.h"
-
-#include "Logger.h"
 #include "AlgorithmGenerator.h"
+#include "Logger.h"
+#include "Voice.h"
 
 #include <fstream>
 #include <chrono>
@@ -39,13 +39,22 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Algorithm* cascade)
+float* render(Voice* v)
 {
 	float* samples = new float[SAMPLES];
 
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		samples[i] = cascade->getNextSample();
+		if (i == SR * 1.0f)
+			v->keyDown(44);
+		if (i == SR * 3.0f)
+			v->keyUp();
+		if (i == SR * 4.0f)
+			v->keyDown(20);
+		if (i == SR * 7.0f)
+			v->keyUp();
+
+		samples[i] = v->getNextSample();
 	}
 
 	return samples;
@@ -53,12 +62,9 @@ float* render(Algorithm* cascade)
 
 int main()
 {
-	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(SR, "p(c(1,2),c(3,4))", 4);
+	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(SR, "p(c(1,f(2)),c(3,f(4)))", 4);
+	Voice* v = new Voice(alg);
 
-	alg->getOperators()[0]->setFrequency(1000.0f);
-	alg->getOperators()[1]->setFrequency(1000.0f);
-	alg->getOperators()[2]->setFrequency(2000.0f);
-	alg->getOperators()[3]->setFrequency(2000.0f);
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
@@ -71,7 +77,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 	
-	float* samples = render(alg);
+	float* samples = render(v);
 	char* data = format(samples, SAMPLES);
 
 	auto end = chrono::high_resolution_clock::now();
@@ -84,7 +90,7 @@ int main()
 
 	out.close();
 
-	delete alg;
+	delete v;
 	delete[] samples;
 	delete[] data;
 

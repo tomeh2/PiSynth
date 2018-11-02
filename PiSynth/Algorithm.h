@@ -21,5 +21,6 @@ public:
 
 	float getNextSample();
 	Operator** getOperators();
+	int getOperatorCount();
 };
 

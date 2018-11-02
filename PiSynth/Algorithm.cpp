@@ -26,3 +26,8 @@ Operator** Algorithm::getOperators()
 {
 	return this->operators;
 }
+
+int Algorithm::getOperatorCount()
+{
+	return this->operatorCount;
+}
