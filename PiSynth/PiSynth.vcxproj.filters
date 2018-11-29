@@ -35,6 +35,28 @@
     <ClCompile Include="Voice.cpp">
       <Filter>SynthEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Channel.cpp">
+      <Filter>SynthEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="RtMidi.cpp" />
+    <ClCompile Include="Renderer.cpp">
+      <Filter>SynthEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Binasc.cpp">
+      <Filter>Midi IO Temp</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiEvent.cpp">
+      <Filter>Midi IO Temp</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiEventList.cpp">
+      <Filter>Midi IO Temp</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiFile.cpp">
+      <Filter>Midi IO Temp</Filter>
+    </ClCompile>
+    <ClCompile Include="MidiMessage.cpp">
+      <Filter>Midi IO Temp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debugging">
@@ -57,6 +79,9 @@
     </Filter>
     <Filter Include="SynthEngine">
       <UniqueIdentifier>{3ce3ef23-aa1d-4f7b-9012-8a3511b048cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Midi IO Temp">
+      <UniqueIdentifier>{df0ebf5c-294f-4909-a595-99fd18aa55e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,8 +124,33 @@
     <ClInclude Include="Voice.h">
       <Filter>SynthEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Channel.h">
+      <Filter>SynthEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="RtMidi.h" />
+    <ClInclude Include="Renderer.h">
+      <Filter>SynthEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Binasc.h">
+      <Filter>Midi IO Temp</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiEvent.h">
+      <Filter>Midi IO Temp</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiEventList.h">
+      <Filter>Midi IO Temp</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiFile.h">
+      <Filter>Midi IO Temp</Filter>
+    </ClInclude>
+    <ClInclude Include="MidiMessage.h">
+      <Filter>Midi IO Temp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="edited.mid" />
   </ItemGroup>
 </Project>

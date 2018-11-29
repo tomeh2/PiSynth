@@ -29,11 +29,9 @@ void WaveGenerator::setOscillatorType(Waveform waveform)
 	{
 	case SINE_WAVE:
 		this->oscillator = new SineOscillator(this->sampleRate, 440.0f);
-		Logger::print("WaveGenerator -> Waveform changed to SINE_WAVE");
 		break;
 	case SQUARE_WAVE:
 		this->oscillator = new SquareOscillator(this->sampleRate, 440.0f);
-		Logger::print("WaveGenerator -> Waveform changed to SQUARE_WAVE");
 		break;
 	}
 }

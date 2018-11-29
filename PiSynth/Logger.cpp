@@ -27,7 +27,18 @@ Prints a formatted message. The format is as following:
 Example for message "yay logging":
 [13:24:53] yay logging
 */
-void Logger::print(std::string message)
+void Logger::print(const char* message)
 {
 	cout << getCurrentTimeAsString() << " " << message << "\n";
+}
+
+//SAME LINE PRINT FORMATTED
+void Logger::slprint(const char* message)
+{
+	cout << getCurrentTimeAsString() << " " << message;
+}
+
+void Logger::nfprint(const char* message)
+{
+	cout << message;
 }

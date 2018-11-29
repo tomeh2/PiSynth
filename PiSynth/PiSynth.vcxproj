@@ -77,12 +77,20 @@
   <ItemGroup>
     <ClCompile Include="Algorithm.cpp" />
     <ClCompile Include="AlgorithmGenerator.cpp" />
+    <ClCompile Include="Binasc.cpp" />
     <ClCompile Include="Cascade.cpp" />
+    <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MidiEvent.cpp" />
+    <ClCompile Include="MidiEventList.cpp" />
+    <ClCompile Include="MidiFile.cpp" />
+    <ClCompile Include="MidiMessage.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Parallel.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
     <ClCompile Include="Voice.cpp" />
@@ -91,13 +99,21 @@
   <ItemGroup>
     <ClInclude Include="Algorithm.h" />
     <ClInclude Include="AlgorithmGenerator.h" />
+    <ClInclude Include="Binasc.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cascade.h" />
+    <ClInclude Include="Channel.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="MidiEvent.h" />
+    <ClInclude Include="MidiEventList.h" />
+    <ClInclude Include="MidiFile.h" />
+    <ClInclude Include="MidiMessage.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Oscillator.h" />
     <ClInclude Include="Parallel.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RtMidi.h" />
     <ClInclude Include="SineOscillator.h" />
     <ClInclude Include="SquareOscillator.h" />
     <ClInclude Include="Voice.h" />
@@ -105,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="edited.mid" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

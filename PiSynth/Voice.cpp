@@ -1,9 +1,9 @@
 #include "Voice.h"
 #include "Logger.h"
 
-#define ROOT12_2 1.059463.0f
+#include <string>
 
-int tempVol;		//Temporary variable used to hold the volume until the Envelope Generator is developed
+#define ROOT12_2 1.059463.0f
 
 Voice::Voice(Algorithm* algorithm)
 {
@@ -29,8 +29,6 @@ void Voice::keyDown(int keyNum)
 {
 	tempVol = 1.0f;
 
-	Logger::print(std::string("Key Pressed!"));
-
 	if (keyNum > 0 && keyNum <= 88)
 	{
 		int opCount = this->algorithm->getOperatorCount();
@@ -45,7 +43,10 @@ void Voice::keyDown(int keyNum)
 
 void Voice::keyUp()
 {
-	Logger::print(std::string("Key Released!"));
-
 	tempVol = 0.0f;
+}
+
+bool Voice::isActive()
+{
+	return tempVol == 1.0f;
 }

@@ -6,7 +6,8 @@ class Logger
 {
 private:
 public:
-	static void print(std::string message);
-	static void printError(int errCode, std::string errMessage);
+	static void print(const char* message);
+	static void nfprint(const char* message);
+	static void slprint(const char* message);
 };
 

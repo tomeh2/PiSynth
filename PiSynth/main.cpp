@@ -1,17 +1,22 @@
+
 #include <iostream>
 
-#include "Algorithm.h"
-#include "AlgorithmGenerator.h"
 #include "Logger.h"
-#include "Voice.h"
+#include "Renderer.h"
+
+#include "MidiFile.h"
+#include "MidiEvent.h"
 
 #include <fstream>
 #include <chrono>
+#include <queue>
+#include <algorithm>
 
 #define SR 88200
-#define SAMPLES 882000
+#define SAMPLES 44100 * 180
 
 using namespace std;
+using namespace smf;
 
 void test()
 {
@@ -39,32 +44,47 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Voice* v)
+float* render(Renderer* v, queue<MidiEvent>* evnts)
 {
 	float* samples = new float[SAMPLES];
-
+	float timing = 0.0f;
+	
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		if (i == SR * 1.0f)
-			v->keyDown(44);
-		if (i == SR * 3.0f)
-			v->keyUp();
-		if (i == SR * 4.0f)
-			v->keyDown(20);
-		if (i == SR * 7.0f)
-			v->keyUp();
+		MidiEvent e = evnts->front();
+		if (e.tick < timing)
+		{
+			v->processCommand(e.getCommandByte() & 0xF0, e.getChannel(), e.getKeyNumber());
+			evnts->pop();
+		}
+		samples[i] = v->getNextSample();
 
+		timing += 0.025f;
+	}
+	
+
+	/*
+	for (int i = 0; i < SAMPLES; i++)
+	{
+		
+		if (i == SR * 1)
+			v->processCommand(0x80, 0, 44);
+		if (i == SR * 3)
+			v->processCommand(0x80, 0, 20);
+		if (i == SR * 4)
+			v->processCommand(0x90, 0, 44);
+		if (i == SR * 7)
+			v->processCommand(0x90, 0, 20);
+			
 		samples[i] = v->getNextSample();
 	}
-
+	*/
 	return samples;
 }
-
+/*
 int main()
 {
-	Algorithm* alg = AlgorithmGenerator::generateAlgorithmFromString(SR, "p(c(1,f(2)),c(3,f(4)))", 4);
-	Voice* v = new Voice(alg);
-
+	Renderer r(44100, 4, 8);
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
@@ -77,7 +97,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 	
-	float* samples = render(v);
+	float* samples = render(&r);
 	char* data = format(samples, SAMPLES);
 
 	auto end = chrono::high_resolution_clock::now();
@@ -86,16 +106,76 @@ int main()
 
 	cout << "Time Elapsed: " << ms << " ms\n";
 
-	out.write(data, SAMPLES);
+	out.write(data, SAMPLES * 2);
 
 	out.close();
 
-	delete v;
 	delete[] samples;
 	delete[] data;
 
 	cin.get();
 	return 0;
+}*/
+#include <fstream>
+int main()
+{
+	MidiFile file;
+
+	std::cout << file.read("/home/pi/Desktop/edited.mid") << "\n";
+
+	vector<MidiEvent> events;
+	
+	for (int i = 0; i < file.getTrackCount(); i++)
+	{
+		for (int j = 0; j < file[i].getEventCount(); j++)
+		{
+			events.push_back(file[i][j]);
+		}
+	}
+	
+	std::sort(events.begin(), events.end(), [](const MidiEvent& a, const MidiEvent& b) -> bool {return a.tick < b.tick; });
+
+	for (auto i = events.begin(); i != events.end(); i++)
+		std::cout << i->tick << "\n";
+
+	queue<MidiEvent> ev;
+	for (int i = 0; i < events.size(); i++)
+	{
+		ev.push(events[i]);
+	}
+
+
+	Renderer r(44100, 16, 32);
+
+	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
+
+	if (!out.is_open())
+	{
+		cout << "File not open SCREEEEkkEEEE!\n";
+		cin.get();
+		return 0;
+	}
+
+	auto start = chrono::high_resolution_clock::now();
+
+	float* samples = render(&r, &ev);
+
+	auto end = chrono::high_resolution_clock::now();
+
+	char* data = format(samples, SAMPLES);
+
+	auto dur = end - start;
+	auto ms = chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+
+	cout << "Time Elapsed: " << ms << " ms\n";
+
+	out.write(data, SAMPLES * 2);
+
+	out.close();
+
+	delete[] samples;
+	delete[] data;
 
 	cin.get();
+	return 0;
 }
