@@ -47,7 +47,8 @@ char* format(float* nums, int size)
 float* render(Renderer* v, queue<MidiEvent>* evnts)
 {
 	float* samples = new float[SAMPLES];
-	float timing = 0.0f;
+	int timing = 0;
+	float dec = 0.0f;
 	
 	for (int i = 0; i < SAMPLES; i++)
 	{
@@ -59,7 +60,12 @@ float* render(Renderer* v, queue<MidiEvent>* evnts)
 		}
 		samples[i] = v->getNextSample();
 
-		timing += 0.025f;
+		dec += 0.025f;
+		if (dec >= 1.0f)
+		{
+			timing++;
+			dec -= 1.0f;
+		}
 	}
 	
 

@@ -56,6 +56,7 @@ void Channel::keyUp(int keyNum)
 		Voice* v = this->activeVoices.at(keyNum);
 		v->keyUp();
 		this->activeVoices.erase(keyNum);
+		this->freeVoices.push(v);
 	}
 	catch (std::out_of_range e)
 	{
