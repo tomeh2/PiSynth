@@ -36,7 +36,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 2000.0f);
+		int sample = (int)(nums[i] * 1500.0f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -44,47 +44,48 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Renderer* v, queue<MidiEvent>* evnts)
+float* render(Renderer* v, MidiEventList& evnts)
 {
 	float* samples = new float[SAMPLES];
-	int timing = 0;
 	float dec = 0.0f;
 	
+	MidiEvent e = evnts[0];
+	int ind = 1, var = 0;
 	for (int i = 0; i < SAMPLES; i++)
 	{
-		MidiEvent e = evnts->front();
-		if (e.tick < timing)
+		if (evnts[ind].tick < (int) var && ind < evnts.getSize() - 1)
 		{
+			e = evnts[ind++];
 			v->processCommand(e.getCommandByte() & 0xF0, e.getChannel(), e.getKeyNumber());
-			evnts->pop();
 		}
+		
 		samples[i] = v->getNextSample();
+		dec += 0.05f;
 
-		dec += 0.025f;
 		if (dec >= 1.0f)
 		{
-			timing++;
 			dec -= 1.0f;
+			var++;
 		}
 	}
 	
-
 	/*
+	
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		
 		if (i == SR * 1)
-			v->processCommand(0x80, 0, 44);
+			v->processCommand(0x90, 0, 44);
 		if (i == SR * 3)
-			v->processCommand(0x80, 0, 20);
+			v->processCommand(0x80, 0, 44);
 		if (i == SR * 4)
 			v->processCommand(0x90, 0, 44);
 		if (i == SR * 7)
-			v->processCommand(0x90, 0, 20);
+			v->processCommand(0x80, 0, 44);
 			
 		samples[i] = v->getNextSample();
-	}
-	*/
+	}*/
+	
 	return samples;
 }
 /*
@@ -123,33 +124,27 @@ int main()
 	return 0;
 }*/
 #include <fstream>
+
 int main()
 {
 	MidiFile file;
+	file.read("/home/pi/Desktop/Shared/edited.mid");
+	//std::cout << file.getTrackCount() << "\n";
 
-	std::cout << file.read("/home/pi/Desktop/edited.mid") << "\n";
+	MidiEvent* evnts = new MidiEvent[file.getEventCount(0)];
+	file.joinTracks();
+	file.sortTracks();
+	file.absoluteTicks();
+	int ind = 0;
 
-	vector<MidiEvent> events;
-	
+	std::cout << &file[0] << "\n";
+
 	for (int i = 0; i < file.getTrackCount(); i++)
 	{
-		for (int j = 0; j < file[i].getEventCount(); j++)
-		{
-			events.push_back(file[i][j]);
-		}
+		
 	}
 	
-	std::sort(events.begin(), events.end(), [](const MidiEvent& a, const MidiEvent& b) -> bool {return a.tick < b.tick; });
-
-	for (auto i = events.begin(); i != events.end(); i++)
-		std::cout << i->tick << "\n";
-
-	queue<MidiEvent> ev;
-	for (int i = 0; i < events.size(); i++)
-	{
-		ev.push(events[i]);
-	}
-
+	//std::sort(events.begin(), events.end(), [](const MidiEvent& a, const MidiEvent& b) -> bool {return (a.tick <= b.tick); });
 
 	Renderer r(44100, 16, 32);
 
@@ -164,7 +159,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 
-	float* samples = render(&r, &ev);
+	float* samples = render(&r, file[0]);
 
 	auto end = chrono::high_resolution_clock::now();
 
@@ -173,7 +168,7 @@ int main()
 	auto dur = end - start;
 	auto ms = chrono::duration_cast<std::chrono::milliseconds>(dur).count();
 
-	cout << "Time Elapsed: " << ms << " ms\n";
+	cout << "Time Elapsed: " << ms / 1000.0f << " sec\n";
 
 	out.write(data, SAMPLES * 2);
 

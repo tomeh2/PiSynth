@@ -29,16 +29,16 @@ void Voice::keyDown(int keyNum)
 {
 	tempVol = 1.0f;
 
-	if (keyNum > 0 && keyNum <= 88)
+	if (keyNum > 0 && keyNum <= 127)
 	{
 		int opCount = this->algorithm->getOperatorCount();
 		Operator** operators = this->algorithm->getOperators();
 
 		for (int i = 0; i < opCount; i++)
-			operators[i]->setFrequency(pow(1.059463f, keyNum - 49) * 440.0f);
+			operators[i]->setFrequency(pow(1.059463f, keyNum - 69) * 440.0f);
 	}
 	else
-		Logger::print("Voice -> value of the pressed key is not a valid value (1 - 88)");
+		Logger::print("Voice -> value of the pressed key is not a valid value (1 - 127)");
 }
 
 void Voice::keyUp()
