@@ -57,6 +57,12 @@
     <ClCompile Include="MidiMessage.cpp">
       <Filter>Midi IO Temp</Filter>
     </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>SynthEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="FastMath.cpp">
+      <Filter>Miscellaneous</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debugging">
@@ -82,6 +88,9 @@
     </Filter>
     <Filter Include="Midi IO Temp">
       <UniqueIdentifier>{df0ebf5c-294f-4909-a595-99fd18aa55e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{3a521746-a27a-4993-9d1a-239bf8493ff7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="MidiMessage.h">
       <Filter>Midi IO Temp</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>SynthEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="FastMath.h">
+      <Filter>Miscellaneous</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

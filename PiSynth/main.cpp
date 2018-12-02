@@ -12,7 +12,10 @@
 #include <queue>
 #include <algorithm>
 
-#define SR 88200
+#include "Clock.h"
+#include "FastMath.h"
+
+#define SR 44100
 #define SAMPLES 44100 * 180
 
 using namespace std;
@@ -36,7 +39,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 1500.0f);
+		int sample = (int)(nums[i] * 1000.0f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -61,6 +64,8 @@ float* render(Renderer* v, MidiEventList& evnts)
 		
 		samples[i] = v->getNextSample();
 		dec += 0.05f;
+
+		Clock::updateClock();
 
 		if (dec >= 1.0f)
 		{
@@ -88,65 +93,25 @@ float* render(Renderer* v, MidiEventList& evnts)
 	
 	return samples;
 }
-/*
-int main()
-{
-	Renderer r(44100, 4, 8);
-
-	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
-
-	if (!out.is_open())
-	{
-		cout << "File not open SCREEEEkkEEEE!\n";
-		cin.get();
-		return 0;
-	}
-
-	auto start = chrono::high_resolution_clock::now();
-	
-	float* samples = render(&r);
-	char* data = format(samples, SAMPLES);
-
-	auto end = chrono::high_resolution_clock::now();
-	auto dur = end - start;
-	auto ms = chrono::duration_cast<std::chrono::milliseconds>(dur).count();
-
-	cout << "Time Elapsed: " << ms << " ms\n";
-
-	out.write(data, SAMPLES * 2);
-
-	out.close();
-
-	delete[] samples;
-	delete[] data;
-
-	cin.get();
-	return 0;
-}*/
-#include <fstream>
 
 int main()
 {
 	MidiFile file;
 	file.read("/home/pi/Desktop/Shared/edited.mid");
-	//std::cout << file.getTrackCount() << "\n";
 
-	MidiEvent* evnts = new MidiEvent[file.getEventCount(0)];
 	file.joinTracks();
 	file.sortTracks();
 	file.absoluteTicks();
 	int ind = 0;
 
-	std::cout << &file[0] << "\n";
-
 	for (int i = 0; i < file.getTrackCount(); i++)
 	{
 		
 	}
-	
-	//std::sort(events.begin(), events.end(), [](const MidiEvent& a, const MidiEvent& b) -> bool {return (a.tick <= b.tick); });
 
-	Renderer r(44100, 16, 32);
+	FastMath::initialize(SR);
+	Clock::initialize(SR);
+	Renderer r(SR, 16, 32);
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
@@ -174,6 +139,7 @@ int main()
 
 	out.close();
 
+	FastMath::destroy();
 	delete[] samples;
 	delete[] data;
 

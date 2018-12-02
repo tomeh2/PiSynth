@@ -14,28 +14,27 @@ which is where the actual signal generation happens.
 class Oscillator
 {
 protected:
-	int sampleRate = 0;		
+	int sampleRate = 0;
 	float frequency = 0.0f;
 	float detuneFrequency = 0.0f;
 
 	float time = 0.0f;
-	float timeStep = 0.0f;
-
-	void update()
-	{
-		this->time += this->timeStep;
-
-		if (this->time >= TWO_PI)
-			this->time -= TWO_PI;
-	}
+	float deltaTime = 0.0f;
 public:
 	virtual float process(float input) = 0;		//this is the function that implements signal generation
 	
+	void update()
+	{
+		this->time += deltaTime;
+
+		if (time >= TWO_PI)
+			time -= TWO_PI;
+	}
+
 	void setFrequency(float newFrequency)
 	{
 		this->frequency = newFrequency;
-
-		this->timeStep = TWO_PI * this->frequency / this->sampleRate;
+		this->deltaTime = TWO_PI * this->frequency / sampleRate;
 	}
 
 	void setDetuneFrequency(float detuneFrequency)

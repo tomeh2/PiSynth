@@ -80,6 +80,8 @@
     <ClCompile Include="Binasc.cpp" />
     <ClCompile Include="Cascade.cpp" />
     <ClCompile Include="Channel.cpp" />
+    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="FastMath.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -103,6 +105,8 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Cascade.h" />
     <ClInclude Include="Channel.h" />
+    <ClInclude Include="Clock.h" />
+    <ClInclude Include="FastMath.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MidiEvent.h" />
