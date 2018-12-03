@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WaveGenerator.h"
+#include "EnvelopeGenerator.h"
 #include "Block.h"
 
 /**
@@ -12,6 +13,7 @@ used in the "Signal generation" phase of sound synthesis. ---DESCRIPTION NOT DON
 class Operator : public Block
 {
 private:
+	EnvelopeGenerator envelopeGenerator;
 	WaveGenerator* waveGenerator;
 public:
 	Operator(int sampleRate);
@@ -21,5 +23,7 @@ public:
 	void setWaveform(Waveform waveform);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);
+	void trigger();
+	void release();
 };
 

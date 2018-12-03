@@ -29,3 +29,13 @@ void Operator::setDetuneFrequency(float newDetuneFrequency)
 {
 	this->waveGenerator->setDetuneFrequency(newDetuneFrequency);
 }
+
+void Operator::trigger()
+{
+	this->envelopeGenerator.trigger();
+}
+
+void Operator::release()
+{
+	this->envelopeGenerator.release();
+}

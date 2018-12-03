@@ -63,6 +63,9 @@
     <ClCompile Include="FastMath.cpp">
       <Filter>Miscellaneous</Filter>
     </ClCompile>
+    <ClCompile Include="EnvelopeGenerator.cpp">
+      <Filter>Signal Generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Debugging">
@@ -160,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="FastMath.h">
       <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvelopeGenerator.h">
+      <Filter>Signal Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

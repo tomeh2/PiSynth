@@ -2,10 +2,6 @@
 #include "Channel.h"
 #include "Logger.h"
 
-#include <thread>
-
-std::thread threads[16];
-
 Renderer::Renderer(int sampleRate, int numChannels, int polyphonyPerChannel)
 {
 	this->numChannels = numChannels;
@@ -33,16 +29,6 @@ float Renderer::getNextSample()
 		sample += this->channels[i]->getNextSample();
 
 	return sample;
-}
-
-void Renderer::test(float var, int start, int end)
-{
-	float part = 0.f;
-	for (int i = start; i < end; i++)
-	{
-		part += this->channels[i]->getNextSample();
-	}
-	var = part;
 }
 
 void Renderer::processCommand(int type, int channel, int keyNum)

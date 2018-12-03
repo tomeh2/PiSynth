@@ -21,7 +21,7 @@ public:
 	/*
 	Calculates and returns the next sample
 	*/
-	float getNextSample();
+	float getNextSample(); 
 
 	/*
 	Activates a voice if there are free voices left.

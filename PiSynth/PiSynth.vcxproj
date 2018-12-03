@@ -81,6 +81,7 @@
     <ClCompile Include="Cascade.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="EnvelopeGenerator.cpp" />
     <ClCompile Include="FastMath.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Cascade.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="EnvelopeGenerator.h" />
     <ClInclude Include="FastMath.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Logger.h" />
