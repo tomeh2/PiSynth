@@ -16,7 +16,7 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define SAMPLES 44100 * 180
+#define SAMPLES 44100 * 20
 
 using namespace std;
 using namespace smf;
@@ -39,7 +39,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 1000.0f);
+		int sample = (int)(nums[i] * 30000.f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -51,7 +51,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 {
 	float* samples = new float[SAMPLES];
 	float dec = 0.0f;
-	
+	/*
 	MidiEvent e = evnts[0];
 	int ind = 1, var = 0;
 	for (int i = 0; i < SAMPLES; i++)
@@ -63,7 +63,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 		}
 		
 		samples[i] = v->getNextSample();
-		dec += 0.05f;
+		dec += 0.045f;
 
 		Clock::updateClock();
 
@@ -73,23 +73,27 @@ float* render(Renderer* v, MidiEventList& evnts)
 			var++;
 		}
 	}
+	*/
 	
-	/*
-	
+	Operator op(44100);
+
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		
 		if (i == SR * 1)
-			v->processCommand(0x90, 0, 44);
+			op.trigger();
 		if (i == SR * 3)
-			v->processCommand(0x80, 0, 44);
+			op.release();
 		if (i == SR * 4)
-			v->processCommand(0x90, 0, 44);
+			op.trigger();
 		if (i == SR * 7)
-			v->processCommand(0x80, 0, 44);
-			
-		samples[i] = v->getNextSample();
-	}*/
+			op.release();
+		
+		samples[i] = op.getNextSample(0.0f);
+		Clock::updateClock();
+
+		//Logger::print(to_string(op.getNextSample(0.f)).c_str());
+	}
 	
 	return samples;
 }

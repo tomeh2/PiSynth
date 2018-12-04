@@ -9,7 +9,7 @@
       <Filter>Signal Generation\Oscillators</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>Debugging</Filter>
+      <Filter>Miscellaneous\Debugging</Filter>
     </ClCompile>
     <ClCompile Include="Operator.cpp">
       <Filter>Signal Generation\Algorithm</Filter>
@@ -68,9 +68,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Debugging">
-      <UniqueIdentifier>{6b2be892-c83a-4d6c-9344-7cc9aeb5c33f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Signal Generation">
       <UniqueIdentifier>{d519364e-7708-4c13-84bd-b6f1c1a19ab7}</UniqueIdentifier>
     </Filter>
@@ -95,6 +92,9 @@
     <Filter Include="Miscellaneous">
       <UniqueIdentifier>{3a521746-a27a-4993-9d1a-239bf8493ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Miscellaneous\Debugging">
+      <UniqueIdentifier>{6b2be892-c83a-4d6c-9344-7cc9aeb5c33f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Oscillator.h">
@@ -107,7 +107,7 @@
       <Filter>Signal Generation\Oscillators</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>Debugging</Filter>
+      <Filter>Miscellaneous\Debugging</Filter>
     </ClInclude>
     <ClInclude Include="Operator.h">
       <Filter>Signal Generation\Algorithm</Filter>

@@ -37,6 +37,7 @@ public:
 	@param transitionVal -> value at which the envelope goes to a new state and ends this one
 	*/
 	void addNewState(float expCoeff, float transitionVal);
+	float getNextValue();
 	void trigger();
 	void release();
 };
