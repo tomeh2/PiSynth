@@ -18,6 +18,6 @@ void Clock::updateClock()
 {
 	Clock::clock++;
 
-	if (Clock::clock == Clock::sampleRate * 45)
+	if (Clock::clock == Clock::sampleRate * 4)
 		Clock::clock = 0;
 }

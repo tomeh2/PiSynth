@@ -1,4 +1,5 @@
 #include "EnvelopeGenerator.h"
+#include "Logger.h"
 
 #include <math.h>
 
@@ -14,52 +15,46 @@ EnvelopeGenerator::~EnvelopeGenerator()
 
 void EnvelopeGenerator::updateTime()
 {
-	this->time += 0.1f;
+	this->time += 0.001f;
 }
 
 float EnvelopeGenerator::calculateNextValue()
 {
+	
 	if (currentState != 0)
 	{
-		float expCoeff = this->expCoeffs[this->currentState];
-		if (expCoeff >= 0.f)
+		if (this->expCoeffs[this->currentState - 1] >= 0.f)
 		{
-			this->currVal += expCoeff * pow(this->time, expCoeff - 1.f) / 100.f;
+			Logger::print(std::to_string(this->expCoeffs[this->currentState - 1]).c_str());
 
-			if (this->currVal >= this->transitionVals[this->currentState])
+			float expo = -1.f / (this->time);
+			this->currVal = pow(M_E, expo);
+
+			if (this->currVal >= 0.99f * this->transitionVals[this->currentState - 1])
 			{
-				this->currVal = this->transitionVals[this->currentState];
-				if (this->currentState != this->expCoeffs.size() - 1)
-				{
-					this->currentState++;
-					this->time = 1.f;
-				}
-				else
-				{
-					this->currentState = 0;
-					this->time = 0.f;
-				}
+				Logger::print(std::to_string(this->currentState).c_str());
+				this->currVal = this->transitionVals[this->currentState - 1];
+				this->time = 0.f;
+				this->currentState++;
 			}
 		}
 		else
 		{
-			this->currVal += expCoeff * pow(this->time, expCoeff - 1.f) / 2.f;
-			 
-			if (this->currVal <= this->transitionVals[this->currentState])
+			this->currVal = pow(M_E, (-this->time) / 1.f);
+
+			
+
+			if (this->currVal <= 0.01f * this->transitionVals[this->currentState - 1])
 			{
-				this->currVal = this->transitionVals[this->currentState];
-				if (this->currentState != this->expCoeffs.size() - 1)
-				{
-					this->currentState++;
-					this->time = 0.f;
-				}
-				else
-				{
-					this->currentState = 0;
-					this->time = 0.f;
-				}
+				this->currVal = this->transitionVals[this->currentState - 1];
+				this->time = 0.f;
+				this->currentState++;
 			}
 		}
+		this->updateTime();
+
+		if (this->currentState == this->expCoeffs.size() + 1)
+			this->currentState = 0;
 	}
 	return this->currVal;
 }

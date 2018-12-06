@@ -21,7 +21,7 @@ private:
 
 	int currentState = 0;
 	float currVal = 0.f;	//Holds the current value of the signal
-	float time = 0.f;
+	float time = 0;
 
 	void updateTime();
 	float calculateNextValue();
