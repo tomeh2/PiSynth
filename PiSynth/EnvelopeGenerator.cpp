@@ -1,5 +1,4 @@
 #include "EnvelopeGenerator.h"
-#include "Logger.h"
 
 #include <math.h>
 
@@ -15,24 +14,20 @@ EnvelopeGenerator::~EnvelopeGenerator()
 
 void EnvelopeGenerator::updateTime()
 {
-	this->time += 0.001f;
+	this->time += 0.002f;
 }
-
+#include "Logger.h"
 float EnvelopeGenerator::calculateNextValue()
 {
-	
 	if (currentState != 0)
 	{
 		if (this->expCoeffs[this->currentState - 1] >= 0.f)
 		{
-			Logger::print(std::to_string(this->expCoeffs[this->currentState - 1]).c_str());
-
 			float expo = -1.f / (this->time);
 			this->currVal = pow(M_E, expo);
 
 			if (this->currVal >= 0.99f * this->transitionVals[this->currentState - 1])
 			{
-				Logger::print(std::to_string(this->currentState).c_str());
 				this->currVal = this->transitionVals[this->currentState - 1];
 				this->time = 0.f;
 				this->currentState++;
@@ -41,8 +36,6 @@ float EnvelopeGenerator::calculateNextValue()
 		else
 		{
 			this->currVal = pow(M_E, (-this->time) / 1.f);
-
-			
 
 			if (this->currVal <= 0.01f * this->transitionVals[this->currentState - 1])
 			{
@@ -86,5 +79,10 @@ void EnvelopeGenerator::trigger()
 
 void EnvelopeGenerator::release()
 {
-	this->expCoeffs.size() - 1;
+	this->currentState = this->expCoeffs.size();
+}
+
+bool EnvelopeGenerator::isActive()
+{
+	return this->currentState != 0;
 }

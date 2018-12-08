@@ -42,3 +42,8 @@ void Operator::release()
 {
 	this->envelopeGenerator.release();
 }
+
+bool Operator::isActive()
+{
+	return this->envelopeGenerator.isActive();
+}

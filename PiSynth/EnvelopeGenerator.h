@@ -40,5 +40,5 @@ public:
 	float getNextValue();
 	void trigger();
 	void release();
+	bool isActive();
 };
-

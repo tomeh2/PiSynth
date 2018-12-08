@@ -5,8 +5,6 @@
 class Voice
 {
 private:
-	int tempVol;		//Temporary variable used to hold the volume until the Envelope Generator is developed
-
 	Algorithm* algorithm;
 public:
 	Voice(Algorithm* algorithm);

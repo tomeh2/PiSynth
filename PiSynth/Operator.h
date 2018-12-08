@@ -25,5 +25,6 @@ public:
 	void setDetuneFrequency(float newDetuneFrequency);
 	void trigger();
 	void release();
+	bool isActive();
 };
 

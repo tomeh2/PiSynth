@@ -29,8 +29,6 @@ public:
 	*/
 	float getNextSample();
 
-	void test(float var, int, int);
-
 	/*
 	Takes a midi command and executes it.
 

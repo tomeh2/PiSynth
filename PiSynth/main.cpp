@@ -16,16 +16,10 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define SAMPLES 44100 * 20
+#define SAMPLES 44100 * 180
 
 using namespace std;
 using namespace smf;
-
-void test()
-{
-	Logger::print("yeeeeeee");
-	cin.get();
-}
 
 char* format(float* nums, int size)
 {
@@ -39,7 +33,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 30000.f);
+		int sample = (int)(nums[i] * 1500.f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -51,7 +45,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 {
 	float* samples = new float[SAMPLES];
 	float dec = 0.0f;
-	/*
+	
 	MidiEvent e = evnts[0];
 	int ind = 1, var = 0;
 	for (int i = 0; i < SAMPLES; i++)
@@ -72,9 +66,13 @@ float* render(Renderer* v, MidiEventList& evnts)
 			dec -= 1.0f;
 			var++;
 		}
+
+		if (i % 88200 == 0)
+			std::cout << i / (441.f * 180.f) << "%\n";
+		
 	}
-	*/
 	
+	/*
 	Operator op(44100);
 
 	for (int i = 0; i < SAMPLES; i++)
@@ -94,7 +92,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 
 		//Logger::print(to_string(op.getNextSample(0.f)).c_str());
 	}
-	
+	*/
 	return samples;
 }
 

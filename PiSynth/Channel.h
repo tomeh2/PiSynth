@@ -10,10 +10,13 @@ class Channel
 {
 private:
 	int maxPolyphony;
+	int sweepCounter = 0;
 
 	std::vector<Voice*> voices;
 	std::stack<Voice*> freeVoices;
 	std::map<int, Voice*> activeVoices;
+
+	void performSweep();
 public:
 	Channel(int sampleRate, int maxPolyphony);
 	~Channel();
