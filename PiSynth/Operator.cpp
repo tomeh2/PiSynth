@@ -4,8 +4,8 @@ Operator::Operator(int sampleRate)
 {
 	this->waveGenerator = new WaveGenerator(sampleRate);
 
-	this->envelopeGenerator.addNewState(1.0f, 1.0f);
-	this->envelopeGenerator.addNewState(-1.0f, 0.0f);
+	this->envelopeGenerator.addNewState(0.02f, 1.f);
+	this->envelopeGenerator.addNewState(-0.1f, 0.0f);
 }
 
 Operator::~Operator()

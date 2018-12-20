@@ -16,7 +16,7 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define SAMPLES 44100 * 180
+#define SAMPLES 44100 * 200
 
 using namespace std;
 using namespace smf;
@@ -33,7 +33,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 1500.f);
+		int sample = (int)(nums[i] * 2500.f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -71,8 +71,8 @@ float* render(Renderer* v, MidiEventList& evnts)
 			std::cout << i / (441.f * 180.f) << "%\n";
 		
 	}
-	
 	/*
+	
 	Operator op(44100);
 
 	for (int i = 0; i < SAMPLES; i++)
@@ -82,17 +82,15 @@ float* render(Renderer* v, MidiEventList& evnts)
 			op.trigger();
 		if (i == SR * 3)
 			op.release();
-		if (i == SR * 4)
+		if (i == SR * 10)
 			op.trigger();
-		if (i == SR * 7)
+		if (i == SR * 14)
 			op.release();
 		
 		samples[i] = op.getNextSample(0.0f);
 		Clock::updateClock();
-
-		//Logger::print(to_string(op.getNextSample(0.f)).c_str());
-	}
-	*/
+	}*/
+	
 	return samples;
 }
 

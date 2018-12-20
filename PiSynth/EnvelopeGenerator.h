@@ -22,9 +22,11 @@ private:
 	int currentState = 0;
 	float currVal = 0.f;	//Holds the current value of the signal
 	float time = 0;
+	float translation = 0.f;	//Values of inverse functions
 
 	void updateTime();
 	float calculateNextValue();
+	void calculateTranslation();
 public:
 	EnvelopeGenerator();
 	~EnvelopeGenerator();

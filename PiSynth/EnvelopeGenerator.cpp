@@ -2,10 +2,10 @@
 
 #include <math.h>
 
+#define EXP_CONST 1.2f
+
 EnvelopeGenerator::EnvelopeGenerator()
 {
-	this->expCoeffs.push_back(0.f);
-	this->transitionVals.push_back(0.f);
 }
 
 EnvelopeGenerator::~EnvelopeGenerator()
@@ -14,37 +14,57 @@ EnvelopeGenerator::~EnvelopeGenerator()
 
 void EnvelopeGenerator::updateTime()
 {
-	this->time += 0.002f;
+	this->time += (1.f / 44100.f);
 }
+
 #include "Logger.h"
+void EnvelopeGenerator::calculateTranslation()
+{
+	if (this->currentState != this->expCoeffs.size())
+	{
+		float coeff = this->expCoeffs[this->currentState];
+		if (coeff > 0.f)
+		{
+			this->translation = coeff * log(1.f - this->currVal / EXP_CONST);
+		}
+		else if (coeff < 0.f)
+		{
+			this->translation = coeff * log(this->currVal - this->transitionVals[this->currentState]);
+			coeff = 0.f;
+		}
+	}
+}
+
 float EnvelopeGenerator::calculateNextValue()
 {
 	if (currentState != 0)
 	{
-		if (this->expCoeffs[this->currentState - 1] >= 0.f)
+		if (this->expCoeffs[this->currentState - 1] > 0.f)
 		{
-			float expo = -1.f / (this->time);
-			this->currVal = pow(M_E, expo);
+			this->currVal = EXP_CONST * (1.f - 
+				exp((-this->time + this->translation) / this->expCoeffs[this->currentState - 1]));
 
-			if (this->currVal >= 0.99f * this->transitionVals[this->currentState - 1])
+			if (this->currVal >= this->transitionVals[this->currentState - 1] * 0.99f)
 			{
 				this->currVal = this->transitionVals[this->currentState - 1];
 				this->time = 0.f;
+				this->calculateTranslation();
 				this->currentState++;
 			}
 		}
-		else
+		else if (this->expCoeffs[this->currentState - 1] < 0.f)
 		{
-			this->currVal = pow(M_E, (-this->time) / 1.f);
+			this->currVal = exp((-this->time - translation) / abs(this->expCoeffs[this->currentState - 1]))
+				+ this->transitionVals[currentState - 1];
 
-			if (this->currVal <= 0.01f * this->transitionVals[this->currentState - 1])
+			if (this->currVal <= 0.001f)
 			{
 				this->currVal = this->transitionVals[this->currentState - 1];
 				this->time = 0.f;
+				this->calculateTranslation();
 				this->currentState++;
 			}
 		}
-		this->updateTime();
 
 		if (this->currentState == this->expCoeffs.size() + 1)
 			this->currentState = 0;
@@ -79,7 +99,8 @@ void EnvelopeGenerator::trigger()
 
 void EnvelopeGenerator::release()
 {
-	this->currentState = this->expCoeffs.size();
+	if (this->isActive())
+		this->currentState = this->expCoeffs.size();
 }
 
 bool EnvelopeGenerator::isActive()
