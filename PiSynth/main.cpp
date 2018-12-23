@@ -33,7 +33,7 @@ char* format(float* nums, int size)
 	int counter = 0;
 	for (int i = 0; i < size; i++)
 	{
-		int sample = (int)(nums[i] * 2500.f);
+		int sample = (int)(nums[i] * 1500.f);
 
 		data[counter++] |= (sample);
 		data[counter++] |= (sample >> 8);
@@ -68,11 +68,10 @@ float* render(Renderer* v, MidiEventList& evnts)
 		}
 
 		if (i % 88200 == 0)
-			std::cout << i / (441.f * 180.f) << "%\n";
+			std::cout << i / (441.f * 200.f) << "%\n";
 		
 	}
 	/*
-	
 	Operator op(44100);
 
 	for (int i = 0; i < SAMPLES; i++)
@@ -80,11 +79,17 @@ float* render(Renderer* v, MidiEventList& evnts)
 		
 		if (i == SR * 1)
 			op.trigger();
-		if (i == SR * 3)
+		if (i == SR * 5)
 			op.release();
-		if (i == SR * 10)
+		if (i == SR * 8)
 			op.trigger();
-		if (i == SR * 14)
+		if (i == SR * 9)
+			op.release();
+		if (i == SR * 15)
+			op.trigger();
+		if (i == SR * 17)
+			op.trigger();
+		if (i == SR * 20)
 			op.release();
 		
 		samples[i] = op.getNextSample(0.0f);
@@ -103,11 +108,6 @@ int main()
 	file.sortTracks();
 	file.absoluteTicks();
 	int ind = 0;
-
-	for (int i = 0; i < file.getTrackCount(); i++)
-	{
-		
-	}
 
 	FastMath::initialize(SR);
 	Clock::initialize(SR);

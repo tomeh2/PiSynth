@@ -54,10 +54,22 @@ float EnvelopeGenerator::calculateNextValue()
 		}
 		else if (this->expCoeffs[this->currentState - 1] < 0.f)
 		{
-			this->currVal = exp((-this->time - translation) / abs(this->expCoeffs[this->currentState - 1]))
+			this->currVal = exp((this->time + translation) / this->expCoeffs[this->currentState - 1])
 				+ this->transitionVals[currentState - 1];
 
-			if (this->currVal <= 0.001f)
+			if (this->currVal <= this->transitionVals[this->currentState - 1] + this->transitionVals[this->currentState - 1] * 0.001f)
+			{
+				this->currVal = this->transitionVals[this->currentState - 1];
+				this->time = 0.f;
+				this->calculateTranslation();
+				this->currentState++;
+			}
+		}
+		else if (this->expCoeffs[this->currentState - 1] == 0.f)
+		{
+			this->currVal = this->transitionVals[this->currentState - 1];
+
+			if (this->time >= this->sustainTimes[this->currentState - 1] && this->sustainTimes[this->currentState - 1] != 0.f)
 			{
 				this->currVal = this->transitionVals[this->currentState - 1];
 				this->time = 0.f;
@@ -86,21 +98,36 @@ float EnvelopeGenerator::getNextValue()
 	}
 }
 
-void EnvelopeGenerator::addNewState(float expCoeff, float transitionVal)
+void EnvelopeGenerator::addNewState(float expCoeff, float transitionVal, float sustainHold)
 {
 	this->expCoeffs.push_back(expCoeff);
 	this->transitionVals.push_back(transitionVal);
+	this->sustainTimes.push_back(sustainHold);
 }
 
 void EnvelopeGenerator::trigger()
 {
+	if (this->isActive())
+	{
+		this->currentState = 0;
+		this->calculateTranslation();
+		this->time = 0.f;
+	}
+	else
+		this->translation = 0.f;
+
 	this->currentState = 1;
 }
 
 void EnvelopeGenerator::release()
 {
 	if (this->isActive())
-		this->currentState = this->expCoeffs.size();
+	{
+		this->currentState = this->expCoeffs.size() - 1;
+		this->calculateTranslation();
+		this->currentState++;
+		this->time = 0.f;
+	}
 }
 
 bool EnvelopeGenerator::isActive()

@@ -17,6 +17,7 @@ class EnvelopeGenerator
 {
 private:
 	std::vector<float> expCoeffs;		//Coefficient which determines the "speed" of it's phase
+	std::vector<float> sustainTimes;
 	std::vector<float> transitionVals;
 
 	int currentState = 0;
@@ -37,8 +38,10 @@ public:
 
 	@param expCoeff -> determines the speed of the given state. Negative values for falling envelope
 	@param transitionVal -> value at which the envelope goes to a new state and ends this one
+	@param sustainHold -> how long a sustain level will be held. If given 0 it will leave the state when release is called.
+						  If the EG is not in sustain state this value is ignored.
 	*/
-	void addNewState(float expCoeff, float transitionVal);
+	void addNewState(float expCoeff, float transitionVal, float sustainHold);
 	float getNextValue();
 	void trigger();
 	void release();

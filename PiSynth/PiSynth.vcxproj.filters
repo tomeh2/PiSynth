@@ -64,7 +64,10 @@
       <Filter>Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="EnvelopeGenerator.cpp">
-      <Filter>Signal Generation</Filter>
+      <Filter>Signal Generation\Envelope Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="EnvelopeMemory.cpp">
+      <Filter>Signal Generation\Envelope Generation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +97,9 @@
     </Filter>
     <Filter Include="Miscellaneous\Debugging">
       <UniqueIdentifier>{6b2be892-c83a-4d6c-9344-7cc9aeb5c33f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Signal Generation\Envelope Generation">
+      <UniqueIdentifier>{6157aa22-0b00-4ec4-8c8e-93e7a72bc110}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +171,10 @@
       <Filter>Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="EnvelopeGenerator.h">
-      <Filter>Signal Generation</Filter>
+      <Filter>Signal Generation\Envelope Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="EnvelopeMemory.h">
+      <Filter>Signal Generation\Envelope Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
