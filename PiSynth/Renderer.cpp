@@ -6,7 +6,7 @@
 
 std::thread threads[16];
 
-Renderer::Renderer(int sampleRate, int numChannels, int polyphonyPerChannel)
+Renderer::Renderer(int sampleRate, int numChannels, int polyphonyPerChannel, Patch patch)
 {
 	this->numChannels = numChannels;
 
@@ -14,7 +14,7 @@ Renderer::Renderer(int sampleRate, int numChannels, int polyphonyPerChannel)
 
 	for (int i = 0; i < numChannels; i++)
 	{
-		this->channels.push_back(new Channel(sampleRate, polyphonyPerChannel));
+		this->channels.push_back(new Channel(sampleRate, polyphonyPerChannel, patch));
 		Logger::print(std::string("Initializing channel " + std::to_string(i)).c_str());
 	}
 }
@@ -48,4 +48,9 @@ void Renderer::processCommand(int type, int channel, int keyNum)
 		this->channels[channel]->keyUp(keyNum);
 		break;
 	}
+}
+
+void Renderer::setPatch(int channel, Patch patch)
+{
+	this->channels[channel]->setNewPatch(patch);
 }

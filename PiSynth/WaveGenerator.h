@@ -17,9 +17,10 @@ enum Waveform
 class WaveGenerator
 {
 private:
-	int sampleRate;
-
 	Oscillator* oscillator = nullptr;
+
+	int sampleRate;
+	float modulationSensitivity = 1.f;
 public:
 	WaveGenerator(int sampleRate);
 	~WaveGenerator();
@@ -63,5 +64,7 @@ public:
 	*/
 	void setDetuneFrequency(float newDetuneFrequency);
 	float getDetuneFrequency();
+
+	void setModulationSensitivity(float newSensitivity);
 };
 

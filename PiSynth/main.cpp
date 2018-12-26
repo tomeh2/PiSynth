@@ -3,6 +3,7 @@
 
 #include "Logger.h"
 #include "Renderer.h"
+#include "Patch.h"
 
 #include "MidiFile.h"
 #include "MidiEvent.h"
@@ -16,7 +17,8 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define SAMPLES 44100 * 200
+#define RENDER_TIME 220
+#define SAMPLES 44100 * RENDER_TIME
 
 using namespace std;
 using namespace smf;
@@ -68,7 +70,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 		}
 
 		if (i % 88200 == 0)
-			std::cout << i / (441.f * 200.f) << "%\n";
+			std::cout << i / (441.f * RENDER_TIME) << "%\n";
 		
 	}
 	/*
@@ -99,6 +101,34 @@ float* render(Renderer* v, MidiEventList& evnts)
 	return samples;
 }
 
+int main2()
+{
+	Patch patch;
+
+	patch.setAlgDescription("p(1, 2)");
+	patch.setOperatorCount(2);
+
+	patch.setFreqRatio(0, 1.f);
+	patch.setFreqRatio(1, 2.f);
+
+	patch.setOutputLevel(0, 1.f);
+	patch.setOutputLevel(1, 0.5f);
+
+	patch.addEnvelopeSegment(0, 0.02f, 1.f, 0.f);
+	patch.addEnvelopeSegment(0, -0.3f, 0.7f, 0.f);
+	patch.addEnvelopeSegment(0, 0.f, 0.7f, 0.f);
+	patch.addEnvelopeSegment(0, -0.1f, 0.f, 0.f);
+
+	patch.addEnvelopeSegment(1, 0.2f, 1.f, 0.f);
+	patch.addEnvelopeSegment(1, -0.03f, 0.4f, 0.f);
+	patch.addEnvelopeSegment(1, 0.f, 0.4f, 0.f);
+	patch.addEnvelopeSegment(1, -0.1f, 0.f, 0.f);
+
+	patch.printPatchData();
+
+	std::cin.get();
+}
+
 int main()
 {
 	MidiFile file;
@@ -107,11 +137,45 @@ int main()
 	file.joinTracks();
 	file.sortTracks();
 	file.absoluteTicks();
-	int ind = 0;
 
-	FastMath::initialize(SR);
+	Patch patch;
+
+	patch.setAlgDescription("p(c(1, 2, 3, f(4)))");
+	patch.setOperatorCount(4);
+
+	patch.setFreqRatio(0, 8.f);
+	patch.setFreqRatio(1, 16.f);
+	patch.setFreqRatio(2, 1.f);
+	patch.setFreqRatio(3, 0.5f);
+
+	patch.setOutputLevel(0, 1.f);
+	patch.setOutputLevel(1, 0.7f);
+	patch.setOutputLevel(2, 1.f);
+	patch.setOutputLevel(3, 0.8f);
+
+	patch.setModulationSensitivity(0, 1.f);
+	patch.setModulationSensitivity(1, 1.f);
+	patch.setModulationSensitivity(2, 1.f);
+	patch.setModulationSensitivity(3, 1.f);
+
+	patch.addEnvelopeSegment(3, 0.002f, 0.5f, 0.f);
+	patch.addEnvelopeSegment(3, -0.02f, 0.0f, 0.f);
+
+	patch.addEnvelopeSegment(2, 0.002f, 0.3f, 0.f);
+	patch.addEnvelopeSegment(2, -0.02f, 0.0f, 0.f);
+
+	patch.addEnvelopeSegment(1, 0.004f, 1.f, 0.f);
+	patch.addEnvelopeSegment(1, -0.05, 0.5f, 0.f);
+	patch.addEnvelopeSegment(1, -0.3, 0.f, 0.f);
+	patch.addEnvelopeSegment(1, -0.05, 0.f, 0.f);
+
+	patch.addEnvelopeSegment(0, 0.004f, 1.f, 0.f);
+	patch.addEnvelopeSegment(0, -0.02, 0.35f, 0.f);
+	patch.addEnvelopeSegment(0, -0.3, 0.f, 0.f);
+	patch.addEnvelopeSegment(0, -0.02, 0.f, 0.f);
+
 	Clock::initialize(SR);
-	Renderer r(SR, 16, 32);
+	Renderer r(SR, 16, 32, patch);
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
@@ -139,7 +203,6 @@ int main()
 
 	out.close();
 
-	FastMath::destroy();
 	delete[] samples;
 	delete[] data;
 

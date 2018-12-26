@@ -18,7 +18,7 @@ Calculates the next sample and returns it's value.
 */
 float WaveGenerator::getNextSample(float input)
 {
-	this->oscillator->process(input);
+	this->oscillator->process(input * this->modulationSensitivity);
 }
 
 void WaveGenerator::setOscillatorType(Waveform waveform)
@@ -60,4 +60,9 @@ float WaveGenerator::getFrequency()
 float WaveGenerator::getDetuneFrequency()
 {
 	return this->oscillator->getDetuneFrequency();
+}
+
+void WaveGenerator::setModulationSensitivity(float newSensitivity)
+{
+	this->modulationSensitivity = newSensitivity;
 }

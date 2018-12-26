@@ -4,9 +4,8 @@
 
 #define EXP_CONST 1.2f
 
-EnvelopeGenerator::EnvelopeGenerator(int sampleRate)
+EnvelopeGenerator::EnvelopeGenerator()
 {
-	this->deltaTime = 1.f / sampleRate;
 }
 
 EnvelopeGenerator::~EnvelopeGenerator()
@@ -17,7 +16,7 @@ EnvelopeGenerator::~EnvelopeGenerator()
 
 void EnvelopeGenerator::updateTime()
 {
-	this->time += this->deltaTime;
+	this->time += (1.f / 44100.f);
 }
 
 void EnvelopeGenerator::incrementState()
@@ -34,13 +33,16 @@ void EnvelopeGenerator::calculateTranslation()
 	{
 		float coeff = this->expCoeffs[this->currentState];
 		if (coeff > 0.f)
+		{
 			this->translation = coeff * log(1.f - this->currVal / EXP_CONST);
+		}
 		else if (coeff < 0.f)
-			this->translation = coeff * log(this->currVal - this->targetVals[this->currentState]);
-		coeff = 0.f;
+		{
+			this->translation = coeff * log(this->currVal - this->transitionVals[this->currentState]);
+		}
 	}
 }
-
+/*
 float EnvelopeGenerator::calculateNextValue()
 {
 	int index = this->currentState - 1;
@@ -50,20 +52,20 @@ float EnvelopeGenerator::calculateNextValue()
 		this->currVal = EXP_CONST * (1.f - 
 			exp((-this->time + this->translation) / this->expCoeffs[index]));
 
-		if (this->currVal >= this->transitionVals[index])
+		if (this->currVal >= this->transitionVals[index] * 0.99f)
 			this->incrementState();
 	}
 	else if (this->expCoeffs[index] < 0.f)		//ENVELOPE FALLS IN THE CURRENT PHASE
 	{
 		this->currVal = exp((this->time + translation) / this->expCoeffs[index])
-			+ this->targetVals[index];
+			+ this->transitionVals[index];
 
-		if (this->currVal <= this->transitionVals[index])
+		if (this->currVal <= this->transitionVals[index] + this->transitionVals[index] * 0.001f)
 			this->incrementState();
 	}
 	else if (this->expCoeffs[index] == 0.f)	//ENVELOPE IS SUSTAINING
 	{
-		this->currVal = this->targetVals[index];
+		this->currVal = this->transitionVals[index];
 
 		if (this->time >= this->sustainTimes[index] && this->sustainTimes[index] != 0.f)
 			this->incrementState();
@@ -72,6 +74,46 @@ float EnvelopeGenerator::calculateNextValue()
 		if (this->currentState == this->expCoeffs.size() + 1)
 			this->currentState = 0;
 	return this->currVal;
+}*/
+
+float EnvelopeGenerator::calculateNextValue()
+{
+	int index = this->currentState - 1;
+
+	if (this->expCoeffs[index] > 0.f)		//ENVELOPE GROWS IN THE CURRENT PHASE
+	{
+		
+	}
+	else if (this->expCoeffs[index] < 0.f)		//ENVELOPE FALLS IN THE CURRENT PHASE
+	{
+		this->currVal = exp((this->time + translation) / this->expCoeffs[index])
+			+ this->transitionVals[index];
+
+		if (this->currVal <= this->transitionVals[index] + this->transitionVals[index] * 0.001f)
+			this->incrementState();
+	}
+	else if (this->expCoeffs[index] == 0.f)	//ENVELOPE IS SUSTAINING
+	{
+		this->currVal = this->transitionVals[index];
+
+		if (this->time >= this->sustainTimes[index] && this->sustainTimes[index] != 0.f)
+			this->incrementState();
+	}
+
+	if (this->currentState == this->expCoeffs.size() + 1)
+		this->currentState = 0;
+	return this->currVal;
+}
+
+void EnvelopeGenerator::envelopeGrow()
+{
+	int index = this->currentState - 1;
+
+	this->currVal = EXP_CONST * (1.f -
+		exp((-this->time + this->translation) / this->expCoeffs[index]));
+
+	if (this->currVal >= this->transitionVals[index] * 0.99f)
+		this->incrementState();
 }
 
 //------------------------------- PUBLIC FUNCTIONS ------------------------------//
@@ -91,18 +133,11 @@ float EnvelopeGenerator::getNextValue()
 	return val;
 }
 
-void EnvelopeGenerator::addNewState(float expCoeff, float targetVal, float holdTime)
+void EnvelopeGenerator::addNewState(float expCoeff, float transitionVal, float sustainHold)
 {
 	this->expCoeffs.push_back(expCoeff);
-	this->targetVals.push_back(targetVal);
-	this->sustainTimes.push_back(holdTime);
-
-	if (expCoeff > 0.f)
-		this->transitionVals.push_back(targetVal * 0.999f);
-	else if (expCoeff < 0.f)
-		this->transitionVals.push_back(targetVal + targetVal * 0.001f);
-	else
-		this->transitionVals.push_back(targetVal);
+	this->transitionVals.push_back(transitionVal);
+	this->sustainTimes.push_back(sustainHold);
 }
 
 void EnvelopeGenerator::trigger()

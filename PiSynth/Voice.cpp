@@ -24,6 +24,11 @@ float Voice::getNextSample()
 	return this->algorithm->getNextSample();
 }
 
+Operator** Voice::getOperators() 
+{
+	return this->algorithm->getOperators();
+}
+
 void Voice::keyDown(int keyNum)
 {
 	if (keyNum > 0 && keyNum <= 127)

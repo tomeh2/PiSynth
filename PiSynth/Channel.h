@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Voice.h"
+#include "Patch.h"
 
 #include <vector>
 #include <stack>
@@ -9,6 +10,8 @@
 class Channel
 {
 private:
+	Patch patch;
+
 	int maxPolyphony;
 	int sweepCounter = 0;
 
@@ -18,7 +21,7 @@ private:
 
 	void performSweep();
 public:
-	Channel(int sampleRate, int maxPolyphony);
+	Channel(int sampleRate, int maxPolyphony, Patch patch);
 	~Channel();
 
 	/*
@@ -41,5 +44,6 @@ public:
 	@param keyNum -> voice which will be released
 	*/
 	void keyUp(int keyNum);
+	void setNewPatch(Patch patch);
 };
 

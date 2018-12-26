@@ -11,6 +11,7 @@ public:
 	~Voice();
 
 	float getNextSample();
+	Operator** getOperators();
 
 	/**
 	Activates the voice with the given key number. The voice will

@@ -66,8 +66,8 @@
     <ClCompile Include="EnvelopeGenerator.cpp">
       <Filter>Signal Generation\Envelope Generation</Filter>
     </ClCompile>
-    <ClCompile Include="EnvelopeMemory.cpp">
-      <Filter>Signal Generation\Envelope Generation</Filter>
+    <ClCompile Include="Patch.cpp">
+      <Filter>SynthEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +173,8 @@
     <ClInclude Include="EnvelopeGenerator.h">
       <Filter>Signal Generation\Envelope Generation</Filter>
     </ClInclude>
-    <ClInclude Include="EnvelopeMemory.h">
-      <Filter>Signal Generation\Envelope Generation</Filter>
+    <ClInclude Include="Patch.h">
+      <Filter>SynthEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

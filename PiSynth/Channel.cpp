@@ -4,15 +4,17 @@
 
 #define SWEEP_PERIOD 4000
 
-Channel::Channel(int sampleRate, int maxPolyphony)
+Channel::Channel(int sampleRate, int maxPolyphony, Patch patch)
 {
 	this->maxPolyphony = maxPolyphony;
 
 	for (int i = 0; i < this->maxPolyphony; i++)
 	{
-		this->voices.push_back(new Voice(AlgorithmGenerator::generateAlgorithmFromString(sampleRate, "p(c(1,f(2)),c(3,f(4)))", 4)));
+		this->voices.push_back(new Voice(AlgorithmGenerator::generateAlgorithmFromString(sampleRate, patch.getAlgDescription(), patch.getOperatorCount())));
 		this->freeVoices.push(this->voices[i]);
 	}
+	this->setNewPatch(patch);
+
 	Logger::print(std::string("Channel initialization completed | Max Polyphony = " + std::to_string(this->maxPolyphony) + " Voices").c_str());
 }
 
@@ -86,4 +88,29 @@ void Channel::keyUp(int keyNum)
 		{
 		//	Logger::print("Tried to deactivate a voice that was not active in the first place!");
 		}
+}
+
+void Channel::setNewPatch(Patch patch)
+{/*
+	for (int i = 0; i < this->maxPolyphony; i++)
+		delete this->voices[i];
+	for (int i = 0; i < this->maxPolyphony; i++)
+		this->voices[i] = new Voice(AlgorithmGenerator::generateAlgorithmFromString(44100, patch.getAlgDescription(), patch.getOperatorCount()));
+		*/
+	Operator** operators;
+	for (int i = 0; i < maxPolyphony; i++)
+	{
+		operators = this->voices[i]->getOperators();
+		for (int j = 0; j < patch.getOperatorCount(); j++)
+		{
+
+			operators[j]->setFrequencyRatio(patch.getFreqRatio(j));
+			operators[j]->setOutputLevel(patch.getOutputLevel(j));
+			operators[j]->setFrequencyRatio(patch.getModulationSensitivity(j));
+			for (int k = 0; k < patch.getCoefficients(j).size(); k++)
+			{
+				operators[j]->addEnvelopePhase(patch.getCoefficients(j)[k], patch.getTargets(j)[k], patch.getHoldTimes(j)[k]);
+			}
+		}
+	}
 }

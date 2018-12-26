@@ -13,16 +13,23 @@ used in the "Signal generation" phase of sound synthesis. ---DESCRIPTION NOT DON
 class Operator : public Block
 {
 private:
-	EnvelopeGenerator envelopeGenerator;
+	EnvelopeGenerator* envelopeGenerator;
 	WaveGenerator* waveGenerator;
+
+	float baseFrequency = 0.f;
+	float frequencyRatio = 1.f;
+	float outputLevel = 1.f;
 public:
 	Operator(int sampleRate);
 	~Operator();
 
 	float getNextSample(float input);
 	void setWaveform(Waveform waveform);
+	void setOutputLevel(float outLevel);
+	void setFrequencyRatio(float newRatio);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);
+	void addEnvelopePhase(float expCoeff, float targetVal, float holdTime);
 	void trigger();
 	void release();
 	bool isActive();

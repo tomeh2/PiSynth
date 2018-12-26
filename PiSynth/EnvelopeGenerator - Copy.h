@@ -18,12 +18,12 @@ class EnvelopeGenerator
 private:
 	std::vector<float> expCoeffs;		//Coefficient which determines the "speed" of it's phase
 	std::vector<float> sustainTimes;
-	std::vector<float> targetVals;
 	std::vector<float> transitionVals;
+
+	void* egFunc(void);		//EG mathematical function pointer
 
 	int currentState = 0;
 	float currVal = 0.f;	//Holds the current value of the signal
-	float deltaTime = 0.f;
 	float time = 0.f;
 	float translation = 0.f;	//Values of inverse functions
 
@@ -31,8 +31,13 @@ private:
 	void incrementState();
 	void calculateTranslation();
 	float calculateNextValue();
+
+	//MATHEMATICAL FUNCTIONS
+	void envelopeGrow();
+	void envelopeFall();
+	void envelopeSustain();
 public:
-	EnvelopeGenerator(int sampleRate);
+	EnvelopeGenerator();
 	~EnvelopeGenerator();
 
 	/*
@@ -49,7 +54,7 @@ public:
 	@param sustainHold -> how long a sustain level will be held. If given 0 it will leave the state when release is called.
 						  If the EG is not in sustain state this value is ignored.
 	*/
-	void addNewState(float expCoeff, float targetVal, float holdTime);
+	void addNewState(float expCoeff, float transitionVal, float sustainHold);
 
 	/*
 	Puts the envelope into the first phase which should be attack (considering that the EG was properly programmed)

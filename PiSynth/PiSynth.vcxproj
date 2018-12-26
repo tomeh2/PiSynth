@@ -82,7 +82,6 @@
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="EnvelopeGenerator.cpp" />
-    <ClCompile Include="EnvelopeMemory.cpp" />
     <ClCompile Include="FastMath.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -93,6 +92,7 @@
     <ClCompile Include="MidiMessage.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Parallel.cpp" />
+    <ClCompile Include="Patch.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
@@ -109,7 +109,6 @@
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="EnvelopeGenerator.h" />
-    <ClInclude Include="EnvelopeMemory.h" />
     <ClInclude Include="FastMath.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="Logger.h" />
@@ -120,6 +119,7 @@
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Oscillator.h" />
     <ClInclude Include="Parallel.h" />
+    <ClInclude Include="Patch.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RtMidi.h" />
     <ClInclude Include="SineOscillator.h" />

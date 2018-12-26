@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Channel.h"
+#include "Patch.h"
 
 #include <vector>
 
@@ -19,7 +20,7 @@ private:
 
 	int numChannels;
 public:
-	Renderer(int sampleRate, int numChannels, int polyphonyPerChannel);
+	Renderer(int sampleRate, int numChannels, int polyphonyPerChannel, Patch patch);
 	~Renderer();
 
 	/*
@@ -35,5 +36,6 @@ public:
 	@param - TODO
 	*/
 	void processCommand(int type, int channel, int keyNum);
+	void setPatch(int channel, Patch patch);
 };
 
