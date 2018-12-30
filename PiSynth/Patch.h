@@ -42,6 +42,7 @@ public:
 	float getOutputLevel(int operatorID);
 	float getModulationSensitivity(int operatorID);
 	//ENVELOPE GENERATOR DATA
+	int getEnvSegmentCount();
 	std::vector<float> getCoefficients(int operatorID);
 	std::vector<float> getTargets(int operatorID);
 	std::vector<float> getHoldTimes(int operatorID);

@@ -33,6 +33,11 @@ void Operator::setOutputLevel(float outLevel)
 	this->outputLevel = outLevel;
 }
 
+void Operator::setModulationSensitivity(float newModSens)
+{
+	this->waveGenerator->setModulationSensitivity(newModSens);
+}
+
 void Operator::setFrequencyRatio(float newRatio)
 {
 	this->frequencyRatio = newRatio;

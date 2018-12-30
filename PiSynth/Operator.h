@@ -26,6 +26,7 @@ public:
 	float getNextSample(float input);
 	void setWaveform(Waveform waveform);
 	void setOutputLevel(float outLevel);
+	void setModulationSensitivity(float newModSens);
 	void setFrequencyRatio(float newRatio);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);

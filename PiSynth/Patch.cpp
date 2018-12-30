@@ -67,6 +67,11 @@ float Patch::getModulationSensitivity(int operatorID)
 	return this->modSens[operatorID];
 }
 
+int Patch::getEnvSegmentCount()
+{
+	return this->expCoeffs.size();
+}
+
 std::vector<float> Patch::getCoefficients(int operatorID)
 {
 	return this->expCoeffs[operatorID];

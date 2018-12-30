@@ -140,7 +140,7 @@ int main()
 
 	Patch patch;
 
-	patch.setAlgDescription("p(c(1, 2, 3, f(4)))");
+	patch.setAlgDescription("p(c(1, 2), c(3, f(4)))");
 	patch.setOperatorCount(4);
 
 	patch.setFreqRatio(0, 8.f);
@@ -148,8 +148,8 @@ int main()
 	patch.setFreqRatio(2, 1.f);
 	patch.setFreqRatio(3, 0.5f);
 
-	patch.setOutputLevel(0, 1.f);
-	patch.setOutputLevel(1, 0.7f);
+	patch.setOutputLevel(0, 0.1f);
+	patch.setOutputLevel(1, 1.f);
 	patch.setOutputLevel(2, 1.f);
 	patch.setOutputLevel(3, 0.8f);
 
@@ -158,21 +158,21 @@ int main()
 	patch.setModulationSensitivity(2, 1.f);
 	patch.setModulationSensitivity(3, 1.f);
 
-	patch.addEnvelopeSegment(3, 0.002f, 0.5f, 0.f);
-	patch.addEnvelopeSegment(3, -0.02f, 0.0f, 0.f);
+	patch.addEnvelopeSegment(0, 0.002f, 0.5f, 0.f);
+	patch.addEnvelopeSegment(0, -0.02f, 0.0f, 0.f);
 
-	patch.addEnvelopeSegment(2, 0.002f, 0.3f, 0.f);
-	patch.addEnvelopeSegment(2, -0.02f, 0.0f, 0.f);
+	patch.addEnvelopeSegment(1, 0.002f, 0.15f, 0.f);
+	patch.addEnvelopeSegment(1, -0.02f, 0.0f, 0.f);
 
-	patch.addEnvelopeSegment(1, 0.004f, 1.f, 0.f);
-	patch.addEnvelopeSegment(1, -0.05, 0.5f, 0.f);
-	patch.addEnvelopeSegment(1, -0.3, 0.f, 0.f);
-	patch.addEnvelopeSegment(1, -0.05, 0.f, 0.f);
+	patch.addEnvelopeSegment(2, 0.004f, 1.f, 0.f);
+	patch.addEnvelopeSegment(2, -0.035, 0.5f, 0.f);
+	patch.addEnvelopeSegment(2, -0.3, 0.f, 0.f);
+	patch.addEnvelopeSegment(2, -0.05, 0.f, 0.f);
 
-	patch.addEnvelopeSegment(0, 0.004f, 1.f, 0.f);
-	patch.addEnvelopeSegment(0, -0.02, 0.35f, 0.f);
-	patch.addEnvelopeSegment(0, -0.3, 0.f, 0.f);
-	patch.addEnvelopeSegment(0, -0.02, 0.f, 0.f);
+	patch.addEnvelopeSegment(3, 0.004f, 1.f, 0.f);
+	patch.addEnvelopeSegment(3, -0.005, 0.35f, 0.f);
+	patch.addEnvelopeSegment(3, -0.3, 0.f, 0.f);
+	patch.addEnvelopeSegment(3, -0.02, 0.f, 0.f);
 
 	Clock::initialize(SR);
 	Renderer r(SR, 16, 32, patch);
