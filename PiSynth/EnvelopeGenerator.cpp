@@ -1,4 +1,5 @@
 #include "EnvelopeGenerator.h"
+#include "Logger.h"
 
 #include <math.h>
 
@@ -37,7 +38,6 @@ void EnvelopeGenerator::calculateTranslation()
 			this->translation = coeff * log(1.f - this->currVal / EXP_CONST);
 		else if (coeff < 0.f)
 			this->translation = coeff * log(this->currVal - this->targetVals[this->currentState]);
-		coeff = 0.f;
 	}
 }
 
@@ -55,7 +55,7 @@ float EnvelopeGenerator::calculateNextValue()
 	}
 	else if (this->expCoeffs[index] < 0.f)		//ENVELOPE FALLS IN THE CURRENT PHASE
 	{
-		this->currVal = exp((this->time + translation) / this->expCoeffs[index])
+		this->currVal = exp((this->time + this->translation) / this->expCoeffs[index])
 			+ this->targetVals[index];
 
 		if (this->currVal <= this->transitionVals[index])
@@ -72,6 +72,20 @@ float EnvelopeGenerator::calculateNextValue()
 		if (this->currentState == this->expCoeffs.size() + 1)
 			this->currentState = 0;
 	return this->currVal;
+}
+
+void EnvelopeGenerator::addNewStateP(float expCoeff, float targetVal, float holdTime)
+{
+	this->expCoeffs.push_back(expCoeff);
+	this->targetVals.push_back(targetVal);
+	this->sustainTimes.push_back(holdTime);
+
+	if (expCoeff > 0.f)
+		this->transitionVals.push_back(targetVal * 0.999f);
+	else if (expCoeff < 0.f)
+		this->transitionVals.push_back(targetVal + targetVal * 0.001f);
+	else
+		this->transitionVals.push_back(targetVal);
 }
 
 //------------------------------- PUBLIC FUNCTIONS ------------------------------//
@@ -91,18 +105,37 @@ float EnvelopeGenerator::getNextValue()
 	return val;
 }
 
-void EnvelopeGenerator::addNewState(float expCoeff, float targetVal, float holdTime)
+void EnvelopeGenerator::addNewState(int speed, float targetVal, int holdTime)
 {
-	this->expCoeffs.push_back(expCoeff);
-	this->targetVals.push_back(targetVal);
-	this->sustainTimes.push_back(holdTime);
+	//CHECK WHETHER THE GIVEN VALUES ARE VALID
+	if (speed < -100 || speed > 100)
+	{
+		Logger::print("Failed to add a new state to the EG. Speed value is invalid!");
+		return;
+	}
 
-	if (expCoeff > 0.f)
-		this->transitionVals.push_back(targetVal * 0.999f);
-	else if (expCoeff < 0.f)
-		this->transitionVals.push_back(targetVal + targetVal * 0.001f);
+	if (targetVal < 0.f || targetVal > 1.f)
+	{
+		Logger::print("Failed to add a new state to the EG. Target value is out of range!");
+		return;
+	}
+
+	if (holdTime < 0 || holdTime > 100)
+	{
+		Logger::print("Failed to add a new state to the EG. Hold Time value is out of range!");
+		return;
+	}
+	//IF WE ARE HERE THEN ALL TESTS HAVE PASSED
+
+	float temp;
+	if (speed > 0)
+		temp = 1.005f - 0.01f * speed;
+	else if (speed < 0)
+		temp = -1.005f + 0.01f * speed;
 	else
-		this->transitionVals.push_back(targetVal);
+		temp = 0.f;
+		
+	this->addNewStateP(temp, targetVal, 0.05f * holdTime);
 }
 
 void EnvelopeGenerator::trigger()

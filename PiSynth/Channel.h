@@ -12,6 +12,7 @@ class Channel
 private:
 	Patch patch;
 
+	int sampleRate;
 	int maxPolyphony;
 	int sweepCounter = 0;
 

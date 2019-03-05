@@ -14,9 +14,9 @@ private:
 	std::map<int, float> outputLevels;
 	std::map<int, float> modSens;
 	//ENVELOPE GENERATOR DATA
-	std::map<int, std::vector<float>> expCoeffs;
+	std::map<int, std::vector<int>> expCoeffs;
 	std::map<int, std::vector<float>> targetVals;
-	std::map<int, std::vector<float>> holdTimes;
+	std::map<int, std::vector<int>> holdTimes;
 
 public:
 	Patch();
@@ -31,7 +31,7 @@ public:
 	void setOutputLevel(int operatorID, float outputLevel);
 	void setModulationSensitivity(int operatorID, float modulationSensitivity);
 	//ENVELOPE GENERATOR DATA
-	void addEnvelopeSegment(int operatorID, float expCoeff, float targetVal, float holdTime);
+	void addEnvelopeSegment(int operatorID, int speed, float targetVal, int holdTime);
 
 	//-------------------- GETTERS ------------------------//
 	//ALGORITHM DATA
@@ -42,10 +42,10 @@ public:
 	float getOutputLevel(int operatorID);
 	float getModulationSensitivity(int operatorID);
 	//ENVELOPE GENERATOR DATA
-	int getEnvSegmentCount();
-	std::vector<float> getCoefficients(int operatorID);
+	int getEnvSegmentCount(int operatorID);
+	std::vector<int> getCoefficients(int operatorID);
 	std::vector<float> getTargets(int operatorID);
-	std::vector<float> getHoldTimes(int operatorID);
+	std::vector<int> getHoldTimes(int operatorID);
 
 	//DEBUG
 	void printPatchData();

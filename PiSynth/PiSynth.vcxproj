@@ -93,10 +93,13 @@
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="Patch.cpp" />
+    <ClCompile Include="PatchFileParser.cpp" />
+    <ClCompile Include="PatchLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Voice.cpp" />
     <ClCompile Include="WaveGenerator.cpp" />
   </ItemGroup>
@@ -120,10 +123,13 @@
     <ClInclude Include="Oscillator.h" />
     <ClInclude Include="Parallel.h" />
     <ClInclude Include="Patch.h" />
+    <ClInclude Include="PatchFileParser.h" />
+    <ClInclude Include="PatchLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RtMidi.h" />
     <ClInclude Include="SineOscillator.h" />
     <ClInclude Include="SquareOscillator.h" />
+    <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Voice.h" />
     <ClInclude Include="WaveGenerator.h" />
   </ItemGroup>

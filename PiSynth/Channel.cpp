@@ -6,13 +6,8 @@
 
 Channel::Channel(int sampleRate, int maxPolyphony, Patch patch)
 {
+	this->sampleRate = sampleRate;
 	this->maxPolyphony = maxPolyphony;
-	/*
-	for (int i = 0; i < this->maxPolyphony; i++)
-	{
-		this->voices.push_back(new Voice(AlgorithmGenerator::generateAlgorithmFromString(sampleRate, patch.getAlgDescription(), patch.getOperatorCount())));
-		this->freeVoices.push(this->voices[i]);
-	}*/
 
 	this->setNewPatch(patch);
 
@@ -107,7 +102,7 @@ void Channel::setNewPatch(Patch patch)
 	//CREATE NEW VOICES
 	for (int i = 0; i < this->maxPolyphony; i++)
 	{
-		this->voices.push_back(new Voice(AlgorithmGenerator::generateAlgorithmFromString(44100, patch.getAlgDescription(), patch.getOperatorCount())));
+		this->voices.push_back(new Voice(AlgorithmGenerator::generateAlgorithmFromString(this->sampleRate, patch.getAlgDescription(), patch.getOperatorCount())));
 		this->freeVoices.push(this->voices[i]);
 	}
 
@@ -122,7 +117,7 @@ void Channel::setNewPatch(Patch patch)
 			operators[j]->setOutputLevel(patch.getOutputLevel(j));
 			operators[j]->setModulationSensitivity(patch.getModulationSensitivity(j));
 
-			for (int k = 0; k < patch.getEnvSegmentCount(); k++)
+			for (int k = 0; k < patch.getEnvSegmentCount(j); k++)
 				operators[j]->addEnvelopePhase(patch.getCoefficients(j)[k], patch.getTargets(j)[k], patch.getHoldTimes(j)[k]);
 		}
 	}

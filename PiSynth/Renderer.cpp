@@ -1,10 +1,5 @@
 #include "Renderer.h"
-#include "Channel.h"
 #include "Logger.h"
-
-#include <thread>
-
-std::thread threads[16];
 
 Renderer::Renderer(int sampleRate, int numChannels, int polyphonyPerChannel, Patch patch)
 {

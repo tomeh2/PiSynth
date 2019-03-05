@@ -4,12 +4,6 @@ Operator::Operator(int sampleRate)
 {
 	this->waveGenerator = new WaveGenerator(sampleRate);
 	this->envelopeGenerator = new EnvelopeGenerator(sampleRate);
-	/*
-	this->envelopeGenerator->addNewState(0.005f, 1.f, 0.f);
-	//this->envelopeGenerator->addNewState(0.f, 1.f, 0.1f);
-	this->envelopeGenerator->addNewState(-0.01f, 0.65f, 0.f);
-	this->envelopeGenerator->addNewState(-1.0f, 0.f, 0.f);
-	this->envelopeGenerator->addNewState(-0.1f, 0.f, 0.f);*/
 }
 
 Operator::~Operator()
@@ -20,7 +14,7 @@ Operator::~Operator()
 
 float Operator::getNextSample(float input)
 {
-	return this->waveGenerator->getNextSample(input) * this->envelopeGenerator->getNextValue();
+	return this->waveGenerator->getNextSample(input) * this->envelopeGenerator->getNextValue() * this->outputLevel;
 }
 
 void Operator::setWaveform(Waveform waveform)
@@ -55,7 +49,7 @@ void Operator::setDetuneFrequency(float newDetuneFrequency)
 	this->waveGenerator->setDetuneFrequency(newDetuneFrequency);
 }
 
-void Operator::addEnvelopePhase(float expCoeff, float targetVal, float holdTime)
+void Operator::addEnvelopePhase(int expCoeff, float targetVal, int holdTime)
 {
 	this->envelopeGenerator->addNewState(expCoeff, targetVal, holdTime);
 }

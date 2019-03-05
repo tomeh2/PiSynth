@@ -35,9 +35,9 @@ void Patch::setModulationSensitivity(int operatorID, float modulationSensitivity
 	this->modSens[operatorID] = modulationSensitivity;
 }
 
-void Patch::addEnvelopeSegment(int operatorID, float expCoeff, float targetVal, float holdTime)
+void Patch::addEnvelopeSegment(int operatorID, int speed, float targetVal, int holdTime)
 {
-	this->expCoeffs[operatorID].push_back(expCoeff);
+	this->expCoeffs[operatorID].push_back(speed);
 	this->targetVals[operatorID].push_back(targetVal);
 	this->holdTimes[operatorID].push_back(holdTime);
 }
@@ -67,12 +67,12 @@ float Patch::getModulationSensitivity(int operatorID)
 	return this->modSens[operatorID];
 }
 
-int Patch::getEnvSegmentCount()
+int Patch::getEnvSegmentCount(int operatorID)
 {
-	return this->expCoeffs.size();
+	return this->expCoeffs[operatorID].size();
 }
 
-std::vector<float> Patch::getCoefficients(int operatorID)
+std::vector<int> Patch::getCoefficients(int operatorID)
 {
 	return this->expCoeffs[operatorID];
 }
@@ -82,7 +82,7 @@ std::vector<float> Patch::getTargets(int operatorID)
 	return this->targetVals[operatorID];
 }
 
-std::vector<float> Patch::getHoldTimes(int operatorID)
+std::vector<int> Patch::getHoldTimes(int operatorID)
 {
 	return this->holdTimes[operatorID];
 }

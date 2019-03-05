@@ -5,9 +5,8 @@
 #include "Block.h"
 
 /**
-Operator in this synthesizer is used a bit differently then in an ordinary FM synth.
-While they do perform the same exact function, in this synthesizer the Operator is
-used in the "Signal generation" phase of sound synthesis. ---DESCRIPTION NOT DONE!!!!
+Smallest unit capable which is capable of producing relatively complex sound and
+is able to interact with other operators.
 */
 
 class Operator : public Block
@@ -30,7 +29,7 @@ public:
 	void setFrequencyRatio(float newRatio);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);
-	void addEnvelopePhase(float expCoeff, float targetVal, float holdTime);
+	void addEnvelopePhase(int expCoeff, float targetVal, int holdTime);
 	void trigger();
 	void release();
 	bool isActive();

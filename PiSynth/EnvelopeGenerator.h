@@ -31,6 +31,8 @@ private:
 	void incrementState();
 	void calculateTranslation();
 	float calculateNextValue();
+
+	void addNewStateP(float expCoeff, float targetVal, float holdTime);
 public:
 	EnvelopeGenerator(int sampleRate);
 	~EnvelopeGenerator();
@@ -49,7 +51,7 @@ public:
 	@param sustainHold -> how long a sustain level will be held. If given 0 it will leave the state when release is called.
 						  If the EG is not in sustain state this value is ignored.
 	*/
-	void addNewState(float expCoeff, float targetVal, float holdTime);
+	void addNewState(int speed, float targetVal, int holdTime);
 
 	/*
 	Puts the envelope into the first phase which should be attack (considering that the EG was properly programmed)

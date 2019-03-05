@@ -1,5 +1,4 @@
 #include "Algorithm.h"
-#include "Logger.h"
 
 Algorithm::Algorithm(Operator** operators, Block* algorithm, int operatorCount)
 {
@@ -11,7 +10,6 @@ Algorithm::Algorithm(Operator** operators, Block* algorithm, int operatorCount)
 
 Algorithm::~Algorithm()
 {
-	Logger::print(std::string(std::to_string(operatorCount)).c_str());
 	for (int i = 0; i < this->operatorCount; i++)
 		delete this->operators[i];
 

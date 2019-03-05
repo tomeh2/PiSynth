@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "Renderer.h"
 #include "Patch.h"
+#include "PatchFileParser.h"
 
 #include "MidiFile.h"
 #include "MidiEvent.h"
@@ -17,8 +18,10 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define RENDER_TIME 220
+#define RENDER_TIME 30
 #define SAMPLES 44100 * RENDER_TIME
+
+#define DEBUG 0
 
 using namespace std;
 using namespace smf;
@@ -47,7 +50,8 @@ float* render(Renderer* v, MidiEventList& evnts)
 {
 	float* samples = new float[SAMPLES];
 	float dec = 0.0f;
-	
+
+#if DEBUG == 1
 	MidiEvent e = evnts[0];
 	int ind = 1, var = 0;
 	for (int i = 0; i < SAMPLES; i++)
@@ -73,63 +77,45 @@ float* render(Renderer* v, MidiEventList& evnts)
 			std::cout << i / (441.f * RENDER_TIME) << "%\n";
 		
 	}
-	/*
-	Operator op(44100);
-
+#endif
+#if DEBUG == 0
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		
 		if (i == SR * 1)
-			op.trigger();
+			v->processCommand(0x90, 0, 40);
 		if (i == SR * 5)
-			op.release();
+			v->processCommand(0x80, 0, 40);
 		if (i == SR * 8)
-			op.trigger();
+			v->processCommand(0x90, 0, 30);
 		if (i == SR * 9)
-			op.release();
+			v->processCommand(0x80, 0, 30);
 		if (i == SR * 15)
-			op.trigger();
+			v->processCommand(0x90, 0, 57);
 		if (i == SR * 17)
-			op.trigger();
+			v->processCommand(0x90, 0, 69);
 		if (i == SR * 20)
-			op.release();
+			v->processCommand(0x80, 0, 57);
+		if (i == SR * 21)
+			v->processCommand(0x80, 0, 69);
 		
-		samples[i] = op.getNextSample(0.0f);
+		samples[i] = v->getNextSample();
 		Clock::updateClock();
-	}*/
-	
+	}
+#endif
 	return samples;
 }
 
-int main2()
+int main()
 {
-	Patch patch;
+	cout << "yaq\n";
+	PatchFileParser parser("/home/pi/Desktop/p.ptch");
+	parser.getFileData();
 
-	patch.setAlgDescription("p(1, 2)");
-	patch.setOperatorCount(2);
-
-	patch.setFreqRatio(0, 1.f);
-	patch.setFreqRatio(1, 2.f);
-
-	patch.setOutputLevel(0, 1.f);
-	patch.setOutputLevel(1, 0.5f);
-
-	patch.addEnvelopeSegment(0, 0.02f, 1.f, 0.f);
-	patch.addEnvelopeSegment(0, -0.3f, 0.7f, 0.f);
-	patch.addEnvelopeSegment(0, 0.f, 0.7f, 0.f);
-	patch.addEnvelopeSegment(0, -0.1f, 0.f, 0.f);
-
-	patch.addEnvelopeSegment(1, 0.2f, 1.f, 0.f);
-	patch.addEnvelopeSegment(1, -0.03f, 0.4f, 0.f);
-	patch.addEnvelopeSegment(1, 0.f, 0.4f, 0.f);
-	patch.addEnvelopeSegment(1, -0.1f, 0.f, 0.f);
-
-	patch.printPatchData();
-
-	std::cin.get();
+	cin.get();
 }
 
-int main()
+int main2()
 {
 	MidiFile file;
 	file.read("/home/pi/Desktop/Shared/edited.mid");
@@ -139,7 +125,7 @@ int main()
 	file.absoluteTicks();
 
 	Patch patch;
-
+	
 	patch.setAlgDescription("p(c(1, 2), c(3, f(4)))");
 	patch.setOperatorCount(4);
 
@@ -148,32 +134,62 @@ int main()
 	patch.setFreqRatio(2, 1.f);
 	patch.setFreqRatio(3, 0.5f);
 
-	patch.setOutputLevel(0, 0.1f);
+	patch.setOutputLevel(0, 0.25f);
 	patch.setOutputLevel(1, 1.f);
 	patch.setOutputLevel(2, 1.f);
-	patch.setOutputLevel(3, 0.8f);
+	patch.setOutputLevel(3, 1.f);
 
 	patch.setModulationSensitivity(0, 1.f);
 	patch.setModulationSensitivity(1, 1.f);
-	patch.setModulationSensitivity(2, 1.f);
+	patch.setModulationSensitivity(2, 1.25f);
 	patch.setModulationSensitivity(3, 1.f);
 
-	patch.addEnvelopeSegment(0, 0.002f, 0.5f, 0.f);
-	patch.addEnvelopeSegment(0, -0.02f, 0.0f, 0.f);
+	patch.addEnvelopeSegment(0, 99, 0.5f, 0.f);
+	patch.addEnvelopeSegment(0, -98, 0.0f, 0.f);
 
-	patch.addEnvelopeSegment(1, 0.002f, 0.15f, 0.f);
-	patch.addEnvelopeSegment(1, -0.02f, 0.0f, 0.f);
+	patch.addEnvelopeSegment(1, 98, 0.15f, 0.f);
+	patch.addEnvelopeSegment(1, -80, 0.0f, 0.f);
 
-	patch.addEnvelopeSegment(2, 0.004f, 1.f, 0.f);
-	patch.addEnvelopeSegment(2, -0.035, 0.5f, 0.f);
-	patch.addEnvelopeSegment(2, -0.3, 0.f, 0.f);
-	patch.addEnvelopeSegment(2, -0.05, 0.f, 0.f);
+	patch.addEnvelopeSegment(2, 98, 1.f, 0.f);
+	patch.addEnvelopeSegment(2, -93, 0.5f, 0.f);
+	patch.addEnvelopeSegment(2, -80, 0.f, 0.f);
+	patch.addEnvelopeSegment(2, -90, 0.f, 0.f);
 
-	patch.addEnvelopeSegment(3, 0.004f, 1.f, 0.f);
-	patch.addEnvelopeSegment(3, -0.005, 0.35f, 0.f);
-	patch.addEnvelopeSegment(3, -0.3, 0.f, 0.f);
-	patch.addEnvelopeSegment(3, -0.02, 0.f, 0.f);
+	patch.addEnvelopeSegment(3, 98, 1.f, 0.f);
+	patch.addEnvelopeSegment(3, -98, 0.8f, 0.f);
+	patch.addEnvelopeSegment(3, -75, 0.f, 0.f);
+	patch.addEnvelopeSegment(3, -90, 0.f, 0.f);
+	/*
+	patch.setAlgDescription("c(1)");
+	patch.setOperatorCount(1);
 
+	patch.setFreqRatio(0, 1.f);
+	//patch.setFreqRatio(1, 0.5f);
+
+
+	patch.setOutputLevel(0, 1.f);
+	//patch.setOutputLevel(1, 1.f);
+
+	patch.setModulationSensitivity(0, 1.25f);
+	//patch.setModulationSensitivity(1, 1.f);
+
+
+	patch.addEnvelopeSegment(0, 100, 1.f, 0);
+	patch.addEnvelopeSegment(0, 0, 1.f, 5);
+	patch.addEnvelopeSegment(0, -98, 0.3f, 0);
+	patch.addEnvelopeSegment(0, 0, 0.3f, 0);
+	patch.addEnvelopeSegment(0, -99, 0.f, 0);
+	
+	patch.addEnvelopeSegment(0, 0.004f, 1.f, 0.f);
+	patch.addEnvelopeSegment(0, -0.035, 0.5f, 0.f);
+	patch.addEnvelopeSegment(0, -0.3, 0.f, 0.f);
+	patch.addEnvelopeSegment(0, -0.05, 0.f, 0.f);
+	
+	//patch.addEnvelopeSegment(1, 0.004f, 1.f, 0.f);
+	//patch.addEnvelopeSegment(1, -0.005, 0.8f, 0.f);
+	//patch.addEnvelopeSegment(1, -0.3, 0.f, 0.f);
+	//patch.addEnvelopeSegment(1, -0.02, 0.f, 0.f);
+	*/
 	Clock::initialize(SR);
 	Renderer r(SR, 16, 32, patch);
 
