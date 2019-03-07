@@ -35,17 +35,29 @@ std::string PatchFileParser::getLine()
 
 void PatchFileParser::parseFile()
 {
-	std::string s1, s2;
+	std::string s1, s2, line;
 
-	for (int i = 0; i < 5; i++) {
-		std::string line = getLine();
+	do
+	{
+		line = getLine();
+		if (line.compare("file_end") == 0)
+			break;
 
 		line.erase(line.size() - 1, 1);
-		int splitIndex = line.find('=');
+		
+		if (line.find(""))
+
 		s1 = line.substr(0, splitIndex);
 		s2 = line.substr(splitIndex + 1, line.size() - 1);
 
+		this->properties.insert(std::pair<std::string, std::string>(s1, s2));
+
 		std::cout << s1 << " | " << s2 << "\n";
+	} while (line.compare("file_end") != 0);
+
+	for (std::map<std::string, std::string>::iterator it = this->properties.begin(); it != this->properties.end(); it++)
+	{
+		std::cout << it->first << " | " << it->second << "\n";
 	}
 }
 
