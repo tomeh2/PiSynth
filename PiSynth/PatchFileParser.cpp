@@ -45,10 +45,10 @@ void PatchFileParser::parseFile()
 
 		line.erase(line.size() - 1, 1);
 		
-		if (line.find(""))
+		if (line.find(""));
 
-		s1 = line.substr(0, splitIndex);
-		s2 = line.substr(splitIndex + 1, line.size() - 1);
+		///s1 = line.substr(0, splitIndex);
+		///s2 = line.substr(splitIndex + 1, line.size() - 1);
 
 		this->properties.insert(std::pair<std::string, std::string>(s1, s2));
 
