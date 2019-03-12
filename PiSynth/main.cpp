@@ -108,9 +108,7 @@ float* render(Renderer* v, MidiEventList& evnts)
 
 int main()
 {
-	cout << "yaq\n";
-	PatchFileParser parser("/home/pi/Desktop/p.ptch");
-	parser.getFileData();
+	PatchFileParser::loadPatchData("/home/pi/Desktop/p.ptch");
 
 	cin.get();
 }

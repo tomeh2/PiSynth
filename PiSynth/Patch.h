@@ -1,13 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <map>
 
 class Patch
 {
 private:
 	//ALGORITHM DATA
-	const char* algorithmDescription;
+	std::string algorithmDescription;
 	int operatorCount;
 	//OPERATOR DATA
 	std::map<int, float> freqRatios;
@@ -24,7 +25,7 @@ public:
 
 	//--------------------- SETTERS -------------------------//
 	//ALGORITHM DATA
-	void setAlgDescription(const char* algDescription);
+	void setAlgDescription(std::string algorithmDescription);
 	void setOperatorCount(int operatorCount);
 	//OPERATOR DATA
 	void setFreqRatio(int operatorID, float freqRatio);
@@ -35,7 +36,7 @@ public:
 
 	//-------------------- GETTERS ------------------------//
 	//ALGORITHM DATA
-	const char* getAlgDescription();
+	std::string getAlgDescription();
 	int getOperatorCount();
 	//OPERATOR DATA
 	float getFreqRatio(int operatorID);

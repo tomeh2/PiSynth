@@ -2,18 +2,14 @@
 
 
 - Phase modulation only works for Sine Oscillators (so that it behaves like FM), not for any other
-
-- Do something about the horrible use of pointers in algorithm generation
-
+- Do something about the horrible use of pointers during algorithm generation
+- Some features are missing from the Patch class. Namely waveform, vpk (WIP) and name data
 
 --------- VERY IMPORTANT ----------
 THERE IS CURRENTLY A MEMORY LEAK IN THE ALGORITHM PART OF THE PROGRAM
 WHILE THE BLOCK AND OPERATORS CAN BE DELETED THE ACTUAL CONSTRUCTS THEY
 ARE MADE OF CANNOT!!!!!!! 
 POSSIBLE SOLUTION: ADD A VECTOR THAT HOLDS THE CONSTRUCTS SO THAT THEY TOO
-CAN BE DELETED!!!!!
-
+CAN BE DELETED!!!!! (maybe)
 
 1st test : ~122.5 sec
-
-APROKSIMIRATI EKSPONENCIJALNE FUNKCIJE U GENERATORU OMOTNICE POMOÆU TAYLOROVIH POLINOMA!!!!!

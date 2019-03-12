@@ -1,21 +1,24 @@
 #pragma once
 
+#include "Patch.h"
+
 #include <fstream>
 #include <map>
+#include <vector>
 
 class PatchFileParser
 {
 private:
-	std::ifstream* patchFileStream;
-	std::map<std::string, std::string> properties;
+	static Patch createPatchFromData(std::map<std::string, std::string> data);
 
-	void loadFile(std::string filename);
-	void parseFile();	//STARTS PARSING THE FILE AND SAVES THE DATA INTO THE PROPERTIES MAP
-	std::string getLine();		//Returns the next line and moves the file pointer to the beginning of the new line
+	static std::vector<int> strToIntVector(std::string str);
+	static std::string getLine(std::ifstream& file);		//Returns the next line and moves the file pointer to the beginning of the new line
+	static void splitLine(std::string str, char splitChar, std::string& s1, std::string& s2);
+	static std::string removeWhitespace(std::string str);
+	static void parseHeader(std::ifstream& file);
+	static void parseInstruments(std::ifstream& file);
+	static void parseFile(std::ifstream& file);	//Starts parsing the data and returns the map containing all the retrieved data
 public:
-	PatchFileParser(std::string filename);
-	~PatchFileParser();
-
-	std::map<std::string, std::string> getFileData();
+	static std::vector<Patch> loadPatchData(std::string filename);
 };
 

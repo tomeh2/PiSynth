@@ -10,9 +10,9 @@ Patch::~Patch()
 {
 }
 
-void Patch::setAlgDescription(const char* algDescription)
+void Patch::setAlgDescription(std::string algorithmDescription)
 {
-	this->algorithmDescription = algDescription;
+	this->algorithmDescription = algorithmDescription;
 }
 
 void Patch::setOperatorCount(int operatorCount)
@@ -42,7 +42,7 @@ void Patch::addEnvelopeSegment(int operatorID, int speed, float targetVal, int h
 	this->holdTimes[operatorID].push_back(holdTime);
 }
 //------------------------------- GETTERS ---------------------------//
-const char* Patch::getAlgDescription()
+std::string Patch::getAlgDescription()
 {
 	return this->algorithmDescription;
 }
