@@ -99,6 +99,7 @@
     <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Voice.cpp" />
     <ClCompile Include="WaveGenerator.cpp" />
   </ItemGroup>
@@ -128,14 +129,12 @@
     <ClInclude Include="RtMidi.h" />
     <ClInclude Include="SineOscillator.h" />
     <ClInclude Include="SquareOscillator.h" />
+    <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Voice.h" />
     <ClInclude Include="WaveGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="edited.mid" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

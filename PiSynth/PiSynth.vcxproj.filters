@@ -75,6 +75,9 @@
     <ClCompile Include="PatchFileParser.cpp">
       <Filter>File IO</Filter>
     </ClCompile>
+    <ClCompile Include="StringHelper.cpp">
+      <Filter>File IO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Signal Generation">
@@ -191,11 +194,11 @@
     <ClInclude Include="PatchFileParser.h">
       <Filter>File IO</Filter>
     </ClInclude>
+    <ClInclude Include="StringHelper.h">
+      <Filter>File IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="edited.mid" />
   </ItemGroup>
 </Project>

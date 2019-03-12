@@ -1,7 +1,10 @@
 #include "PatchFileParser.h"
 #include "Patch.h"
+#include "StringHelper.h"
+#include "Logger.h"
 
 #include <iostream>
+#include <sstream>
 #include <map>
 
 #define MAX_LINE_LEN 128
@@ -28,33 +31,14 @@ Patch PatchFileParser::createPatchFromData(std::map<std::string, std::string> pa
 		p.setOutputLevel(i, std::stof(patchData[std::string("out_lvl") + std::to_string(i)]));
 		p.setModulationSensitivity(i, std::stof(patchData[std::string("mod_sens") + std::to_string(i)]));
 
-		for (int j = 0; j < 4; j++)
+		std::vector<int> envelopeRates = StringHelper::strToIntVector(patchData[std::string("env_rate") + std::to_string(i)], ',');
+		std::vector<float> envelopeLevels = StringHelper::strToFloatVector(patchData[std::string("env_lvl") + std::to_string(i)], ',');
+		for (int j = 0; j < envelopeRates.size(); j++)
 		{
-			//p.addEnvelopeSegment(i,
-			//	std::stoi(patchData[std::string("env_rate") + std::to_string(i)]),
-			//	std::stof(patchData[std::string("env_lvl") + std::to_string(i)]), 0);
+			p.addEnvelopeSegment(i, envelopeRates[j], envelopeLevels[j], 0);
 		}
 	}
 	return p;
-}
-
-std::vector<int> PatchFileParser::strToIntVector(std::string str)
-{
-	std::vector<int> vals;
-	std::vector<std::string> test;
-
-	do
-	{
-		std::string s1, s2;
-
-		splitLine(str, ',', s1, s2);
-
-		str = s2;
-
-		std::cout << s1 << "\n";
-
-		test.push_back(s1);
-	} while (str.find(',' != std::string::npos));
 }
 
 void PatchFileParser::splitLine(std::string str, char splitChar, std::string& s1, std::string& s2)
@@ -94,33 +78,32 @@ void PatchFileParser::parseHeader(std::ifstream& file)
 	{
 		line = getLine(file);
 		
-		if (line.find("{") != std::string::npos)
+		if (line.find("end_prop") != std::string::npos)
 			break;
 		else
 		{
 			splitLine(line, '=', s1, s2);
-
-			std::cout << s1 << " = " << s2 << "\n";
-
-			//this->properties.insert(std::pair<std::string, std::string>(s1, s2));
 		}
 	} while (!file.eof());
-	std::cout << "-------------------------------------\n";
 }
 
-void PatchFileParser::parseInstruments(std::ifstream& file)
+Patch PatchFileParser::parseInstrument(std::ifstream& file)
 {
 	std::map<std::string, std::string> instrumentData;
 	std::string s1, s2, line;
-	int operatorNum = -1, nestingDepth = 1;
+	int operatorNum = -1, nestingDepth = 0;
 
 	do
 	{
+		if (file.eof())
+			break;
+
 		line = getLine(file);
 
 		if (line.find("{") != std::string::npos)
 		{
-			operatorNum++;
+			if (nestingDepth > 1)
+				operatorNum++;
 			nestingDepth++;
 			continue;
 		}
@@ -129,11 +112,13 @@ void PatchFileParser::parseInstruments(std::ifstream& file)
 			nestingDepth--;
 			continue;
 		}
+		else if (line == "")
+			continue;
 
 		splitLine(line, '=', s1, s2);
 		s1 = removeWhitespace(s1);
 
-		if (operatorNum >= 0)
+		if (operatorNum >= 0 && nestingDepth > 1)
 		{
 			s1.append(std::to_string(operatorNum));
 			instrumentData.insert(std::pair<std::string, std::string>(s1, s2));
@@ -143,21 +128,29 @@ void PatchFileParser::parseInstruments(std::ifstream& file)
 			instrumentData.insert(std::pair<std::string, std::string>(s1, s2));
 		}
 	} while (nestingDepth > 0);
-
-	createPatchFromData(instrumentData).printPatchData();
+	std::cout << instrumentData["opv"] << "\n";
+	 return createPatchFromData(instrumentData);
 }
 
-void PatchFileParser::parseFile(std::ifstream& file)
+std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
 {
-	std::string s1, s2, line;
+	std::vector<Patch> patches;
 
-	
+	int loadedPatches = 0;
+	while (!file.eof())
+	{
+		patches.push_back(parseInstrument(file));
+		loadedPatches++;
+	}
+	Logger::print(std::string("Successfully loaded " + std::to_string(loadedPatches) + " patches!").c_str());
+
+	return patches;
 }
 
 //------------------------------- PUBLIC --------------------------------//
 
 std::vector<Patch> PatchFileParser::loadPatchData(std::string filename)
-{/*
+{
 	std::ifstream patchFileStream(filename);
 
 	if (!patchFileStream.is_open())
@@ -166,9 +159,9 @@ std::vector<Patch> PatchFileParser::loadPatchData(std::string filename)
 	}
 
 	parseHeader(patchFileStream);
-	parseInstruments(patchFileStream);
-	*/
-	strToIntVector("100,95,23,42");
+	//parseInstrument(patchFileStream);
+	
+	parseFile(patchFileStream);
 
 	std::vector<Patch> v;
 	return v;
