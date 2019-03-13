@@ -48,20 +48,7 @@ void PatchFileParser::splitLine(std::string str, char splitChar, std::string& s1
 	s2 = str.substr(splitIndex + 1, str.size() - splitIndex - 2);
 }
 
-std::string PatchFileParser::removeWhitespace(std::string str)
-{
-	char temp[MAX_LINE_LEN];
 
-	int strIndex = 0;
-	for (std::string::iterator it = str.begin(); it != str.end(); it++)
-	{
-		if (*it == ' ' || *it == '\t')
-			continue;
-		else
-			temp[strIndex++] = *it;
-	}
-	return std::string(temp);
-}
 
 std::string PatchFileParser::getLine(std::ifstream& file)
 {
@@ -91,20 +78,17 @@ Patch PatchFileParser::parseInstrument(std::ifstream& file)
 {
 	std::map<std::string, std::string> instrumentData;
 	std::string s1, s2, line;
-	int operatorNum = -1, nestingDepth = 0;
+	int operatorNum = -1, nestingDepth = 1;
 
 	do
 	{
-		if (file.eof())
-			break;
-
 		line = getLine(file);
 
 		if (line.find("{") != std::string::npos)
 		{
+			nestingDepth++;
 			if (nestingDepth > 1)
 				operatorNum++;
-			nestingDepth++;
 			continue;
 		}
 		else if (line.find("}") != std::string::npos)
@@ -116,7 +100,7 @@ Patch PatchFileParser::parseInstrument(std::ifstream& file)
 			continue;
 
 		splitLine(line, '=', s1, s2);
-		s1 = removeWhitespace(s1);
+		s1 = StringHelper::removeWhitespace(s1);
 
 		if (operatorNum >= 0 && nestingDepth > 1)
 		{
@@ -128,8 +112,8 @@ Patch PatchFileParser::parseInstrument(std::ifstream& file)
 			instrumentData.insert(std::pair<std::string, std::string>(s1, s2));
 		}
 	} while (nestingDepth > 0);
-	std::cout << instrumentData["opv"] << "\n";
-	 return createPatchFromData(instrumentData);
+	
+	return createPatchFromData(instrumentData);
 }
 
 std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
@@ -139,10 +123,16 @@ std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
 	int loadedPatches = 0;
 	while (!file.eof())
 	{
-		patches.push_back(parseInstrument(file));
-		loadedPatches++;
+		std::string line = getLine(file);
+
+		if (line.find("{") != std::string::npos)
+		{
+			patches.push_back(parseInstrument(file));
+			loadedPatches++;
+		}
+		else if (line.find("end_file") != std::string::npos)
+			break;
 	}
-	Logger::print(std::string("Successfully loaded " + std::to_string(loadedPatches) + " patches!").c_str());
 
 	return patches;
 }
@@ -152,17 +142,24 @@ std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
 std::vector<Patch> PatchFileParser::loadPatchData(std::string filename)
 {
 	std::ifstream patchFileStream(filename);
+	std::vector<Patch> loadedPatches;
 
 	if (!patchFileStream.is_open())
 	{
-		std::cout << "FILE NOT OPEN!\n";
+		Logger::print((std::string("Could not open the given file! ") + filename).c_str());
+	}
+	else
+	{
+		parseHeader(patchFileStream);
+		loadedPatches = parseFile(patchFileStream);
+
+		Logger::print((std::string("Successfully loaded ") + std::to_string(loadedPatches.size()) + " patches!").c_str());
 	}
 
-	parseHeader(patchFileStream);
-	//parseInstrument(patchFileStream);
-	
-	parseFile(patchFileStream);
+	for (int i = 0; i < loadedPatches.size(); i++)
+	{
+		loadedPatches[i].printPatchData();
+	}
 
-	std::vector<Patch> v;
-	return v;
+	return loadedPatches;
 }

@@ -9,5 +9,6 @@ public:
 	static std::vector<std::string> fragmentString(std::string str, char splitChar);
 	static std::vector<int> strToIntVector(std::string str, char splitChar);
 	static std::vector<float> strToFloatVector(std::string str, char splitAt);
+	static std::string removeWhitespace(std::string str);
 };
 

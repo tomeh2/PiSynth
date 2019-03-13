@@ -3,6 +3,8 @@
 #include <ctype.h>
 #include <sstream>
 
+#define MAX_LINE_LEN 128
+
 std::vector<std::string> StringHelper::fragmentString(std::string str, char splitAt)
 {
 	std::vector<std::string> stringFragments;
@@ -46,4 +48,19 @@ std::vector<float> StringHelper::strToFloatVector(std::string str, char splitAt)
 		parsedFloats.push_back(std::stof(stringFragments[i]));
 	}
 	return parsedFloats;
+}
+
+std::string StringHelper::removeWhitespace(std::string str)
+{
+	char temp[MAX_LINE_LEN];
+
+	int strIndex = 0;
+	for (std::string::iterator it = str.begin(); it != str.end(); it++)
+	{
+		if (*it == ' ' || *it == '\t')
+			continue;
+		else
+			temp[strIndex++] = *it;
+	}
+	return std::string(temp);
 }
