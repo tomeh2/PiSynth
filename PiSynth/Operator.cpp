@@ -49,9 +49,9 @@ void Operator::setDetuneFrequency(float newDetuneFrequency)
 	this->waveGenerator->setDetuneFrequency(newDetuneFrequency);
 }
 
-void Operator::addEnvelopePhase(int expCoeff, float targetVal, int holdTime)
+void Operator::addEnvelopePhase(float expCoeff, float targetVal, float holdTime)
 {
-	this->envelopeGenerator->addNewState(expCoeff, targetVal, holdTime);
+	this->envelopeGenerator->addNewStateP(expCoeff, targetVal, holdTime);
 }
 
 void Operator::trigger()

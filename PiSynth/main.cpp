@@ -18,10 +18,10 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define RENDER_TIME 30
+#define RENDER_TIME 120
 #define SAMPLES 44100 * RENDER_TIME
 
-#define DEBUG 0
+#define DEBUG 1
 
 using namespace std;
 using namespace smf;
@@ -108,13 +108,6 @@ float* render(Renderer* v, MidiEventList& evnts)
 
 int main()
 {
-	PatchFileParser::loadPatchData("/home/pi/Desktop/p.ptch");
-
-	cin.get();
-}
-
-int main2()
-{
 	MidiFile file;
 	file.read("/home/pi/Desktop/Shared/edited.mid");
 
@@ -122,74 +115,10 @@ int main2()
 	file.sortTracks();
 	file.absoluteTicks();
 
-	Patch patch;
-	
-	patch.setAlgDescription("p(c(1, 2), c(3, f(4)))");
-	patch.setOperatorCount(4);
-
-	patch.setFreqRatio(0, 8.f);
-	patch.setFreqRatio(1, 16.f);
-	patch.setFreqRatio(2, 1.f);
-	patch.setFreqRatio(3, 0.5f);
-
-	patch.setOutputLevel(0, 0.25f);
-	patch.setOutputLevel(1, 1.f);
-	patch.setOutputLevel(2, 1.f);
-	patch.setOutputLevel(3, 1.f);
-
-	patch.setModulationSensitivity(0, 1.f);
-	patch.setModulationSensitivity(1, 1.f);
-	patch.setModulationSensitivity(2, 1.25f);
-	patch.setModulationSensitivity(3, 1.f);
-
-	patch.addEnvelopeSegment(0, 99, 0.5f, 0.f);
-	patch.addEnvelopeSegment(0, -98, 0.0f, 0.f);
-
-	patch.addEnvelopeSegment(1, 98, 0.15f, 0.f);
-	patch.addEnvelopeSegment(1, -80, 0.0f, 0.f);
-
-	patch.addEnvelopeSegment(2, 98, 1.f, 0.f);
-	patch.addEnvelopeSegment(2, -93, 0.5f, 0.f);
-	patch.addEnvelopeSegment(2, -80, 0.f, 0.f);
-	patch.addEnvelopeSegment(2, -90, 0.f, 0.f);
-
-	patch.addEnvelopeSegment(3, 98, 1.f, 0.f);
-	patch.addEnvelopeSegment(3, -98, 0.8f, 0.f);
-	patch.addEnvelopeSegment(3, -75, 0.f, 0.f);
-	patch.addEnvelopeSegment(3, -90, 0.f, 0.f);
-	/*
-	patch.setAlgDescription("c(1)");
-	patch.setOperatorCount(1);
-
-	patch.setFreqRatio(0, 1.f);
-	//patch.setFreqRatio(1, 0.5f);
-
-
-	patch.setOutputLevel(0, 1.f);
-	//patch.setOutputLevel(1, 1.f);
-
-	patch.setModulationSensitivity(0, 1.25f);
-	//patch.setModulationSensitivity(1, 1.f);
-
-
-	patch.addEnvelopeSegment(0, 100, 1.f, 0);
-	patch.addEnvelopeSegment(0, 0, 1.f, 5);
-	patch.addEnvelopeSegment(0, -98, 0.3f, 0);
-	patch.addEnvelopeSegment(0, 0, 0.3f, 0);
-	patch.addEnvelopeSegment(0, -99, 0.f, 0);
-	
-	patch.addEnvelopeSegment(0, 0.004f, 1.f, 0.f);
-	patch.addEnvelopeSegment(0, -0.035, 0.5f, 0.f);
-	patch.addEnvelopeSegment(0, -0.3, 0.f, 0.f);
-	patch.addEnvelopeSegment(0, -0.05, 0.f, 0.f);
-	
-	//patch.addEnvelopeSegment(1, 0.004f, 1.f, 0.f);
-	//patch.addEnvelopeSegment(1, -0.005, 0.8f, 0.f);
-	//patch.addEnvelopeSegment(1, -0.3, 0.f, 0.f);
-	//patch.addEnvelopeSegment(1, -0.02, 0.f, 0.f);
-	*/
+	vector<Patch> patches = PatchFileParser::loadPatchData("/home/pi/Desktop/p2.ptch");
+	patches[0].printPatchData();
 	Clock::initialize(SR);
-	Renderer r(SR, 16, 32, patch);
+	Renderer r(SR, 16, 32, patches[0]);
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 

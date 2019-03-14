@@ -9,14 +9,6 @@
 
 #define MAX_LINE_LEN 128
 
-void test(std::map<std::string, std::string> mp)
-{
-	for (std::map<std::string, std::string>::iterator it = mp.begin(); it != mp.end(); it++)
-	{
-		std::cout << it->first << " = " << it->second << "\n";
-	}
-}
-
 //------------------------------- PRIVATE -------------------------------//
 Patch PatchFileParser::createPatchFromData(std::map<std::string, std::string> patchData)
 {
@@ -31,11 +23,12 @@ Patch PatchFileParser::createPatchFromData(std::map<std::string, std::string> pa
 		p.setOutputLevel(i, std::stof(patchData[std::string("out_lvl") + std::to_string(i)]));
 		p.setModulationSensitivity(i, std::stof(patchData[std::string("mod_sens") + std::to_string(i)]));
 
-		std::vector<int> envelopeRates = StringHelper::strToIntVector(patchData[std::string("env_rate") + std::to_string(i)], ',');
+		std::vector<float> envelopeRates = StringHelper::strToFloatVector(patchData[std::string("env_rate") + std::to_string(i)], ',');
 		std::vector<float> envelopeLevels = StringHelper::strToFloatVector(patchData[std::string("env_lvl") + std::to_string(i)], ',');
+		std::vector<float> holdTimes = StringHelper::strToFloatVector(patchData[std::string("hold_time") + std::to_string(i)], ',');
 		for (int j = 0; j < envelopeRates.size(); j++)
 		{
-			p.addEnvelopeSegment(i, envelopeRates[j], envelopeLevels[j], 0);
+			p.addEnvelopeSegment(i, envelopeRates[j], envelopeLevels[j], holdTimes[j]);
 		}
 	}
 	return p;
@@ -154,11 +147,6 @@ std::vector<Patch> PatchFileParser::loadPatchData(std::string filename)
 		loadedPatches = parseFile(patchFileStream);
 
 		Logger::print((std::string("Successfully loaded ") + std::to_string(loadedPatches.size()) + " patches!").c_str());
-	}
-
-	for (int i = 0; i < loadedPatches.size(); i++)
-	{
-		loadedPatches[i].printPatchData();
 	}
 
 	return loadedPatches;

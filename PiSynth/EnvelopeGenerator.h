@@ -31,9 +31,9 @@ private:
 	void incrementState();
 	void calculateTranslation();
 	float calculateNextValue();
-
-	void addNewStateP(float expCoeff, float targetVal, float holdTime);
 public:
+	void addNewStateP(float expCoeff, float targetVal, float holdTime);	//This function is only temporarily public, since the envelope generator is still quite early development
+
 	EnvelopeGenerator(int sampleRate);
 	~EnvelopeGenerator();
 

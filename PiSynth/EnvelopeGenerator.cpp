@@ -74,6 +74,8 @@ float EnvelopeGenerator::calculateNextValue()
 	return this->currVal;
 }
 
+//------------------------------- PUBLIC FUNCTIONS ------------------------------//
+
 void EnvelopeGenerator::addNewStateP(float expCoeff, float targetVal, float holdTime)
 {
 	this->expCoeffs.push_back(expCoeff);
@@ -83,12 +85,10 @@ void EnvelopeGenerator::addNewStateP(float expCoeff, float targetVal, float hold
 	if (expCoeff > 0.f)
 		this->transitionVals.push_back(targetVal * 0.999f);
 	else if (expCoeff < 0.f)
-		this->transitionVals.push_back(targetVal + targetVal * 0.001f);
+		this->transitionVals.push_back(targetVal + targetVal * 0.05f);
 	else
 		this->transitionVals.push_back(targetVal);
 }
-
-//------------------------------- PUBLIC FUNCTIONS ------------------------------//
 
 float EnvelopeGenerator::getNextValue()
 {
@@ -104,7 +104,7 @@ float EnvelopeGenerator::getNextValue()
 
 	return val;
 }
-
+/*
 void EnvelopeGenerator::addNewState(int speed, float targetVal, int holdTime)
 {
 	//CHECK WHETHER THE GIVEN VALUES ARE VALID
@@ -136,7 +136,7 @@ void EnvelopeGenerator::addNewState(int speed, float targetVal, int holdTime)
 		temp = 0.f;
 		
 	this->addNewStateP(temp, targetVal, 0.05f * holdTime);
-}
+}*/
 
 void EnvelopeGenerator::trigger()
 {

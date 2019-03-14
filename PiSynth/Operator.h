@@ -29,7 +29,7 @@ public:
 	void setFrequencyRatio(float newRatio);
 	void setFrequency(float newFrequency);
 	void setDetuneFrequency(float newDetuneFrequency);
-	void addEnvelopePhase(int expCoeff, float targetVal, int holdTime);
+	void addEnvelopePhase(float expCoeff, float targetVal, float holdTime);
 	void trigger();
 	void release();
 	bool isActive();
