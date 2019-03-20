@@ -18,10 +18,10 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define RENDER_TIME 120
+#define RENDER_TIME 30
 #define SAMPLES 44100 * RENDER_TIME
 
-#define DEBUG 1
+#define DEBUG 0
 
 using namespace std;
 using namespace smf;
@@ -115,7 +115,7 @@ int main()
 	file.sortTracks();
 	file.absoluteTicks();
 
-	vector<Patch> patches = PatchFileParser::loadPatchData("/home/pi/Desktop/p2.ptch");
+	vector<Patch> patches = PatchFileLoader::loadPatchData("/home/pi/Desktop/p2.ptch");
 	patches[0].printPatchData();
 	Clock::initialize(SR);
 	Renderer r(SR, 16, 32, patches[0]);

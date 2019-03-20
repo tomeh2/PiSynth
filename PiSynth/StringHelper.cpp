@@ -5,6 +5,13 @@
 
 #define MAX_LINE_LEN 128
 
+void StringHelper::splitLine(std::string str, char splitChar, std::string& s1, std::string& s2)
+{
+	int splitIndex = str.find(splitChar);
+	s1 = str.substr(0, splitIndex);
+	s2 = str.substr(splitIndex + 1, str.size() - splitIndex - 2);
+}
+
 std::vector<std::string> StringHelper::fragmentString(std::string str, char splitAt)
 {
 	std::vector<std::string> stringFragments;

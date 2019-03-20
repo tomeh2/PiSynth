@@ -69,13 +69,10 @@
     <ClCompile Include="Patch.cpp">
       <Filter>SynthEngine</Filter>
     </ClCompile>
-    <ClCompile Include="PatchLoader.cpp">
-      <Filter>File IO</Filter>
-    </ClCompile>
-    <ClCompile Include="PatchFileParser.cpp">
-      <Filter>File IO</Filter>
-    </ClCompile>
     <ClCompile Include="StringHelper.cpp">
+      <Filter>File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="PatchFileLoader.cpp">
       <Filter>File IO</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,13 +185,10 @@
     <ClInclude Include="Patch.h">
       <Filter>SynthEngine</Filter>
     </ClInclude>
-    <ClInclude Include="PatchLoader.h">
-      <Filter>File IO</Filter>
-    </ClInclude>
-    <ClInclude Include="PatchFileParser.h">
-      <Filter>File IO</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
+      <Filter>File IO</Filter>
+    </ClInclude>
+    <ClInclude Include="PatchFileLoader.h">
       <Filter>File IO</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "PatchFileParser.h"
+#include "PatchFileLoader.h"
 #include "Patch.h"
 #include "StringHelper.h"
 #include "Logger.h"
@@ -10,7 +10,7 @@
 #define MAX_LINE_LEN 128
 
 //------------------------------- PRIVATE -------------------------------//
-Patch PatchFileParser::createPatchFromData(std::map<std::string, std::string> patchData)
+Patch PatchFileLoader::createPatchFromData(std::map<std::string, std::string> patchData)
 {
 	Patch p;
 
@@ -34,23 +34,14 @@ Patch PatchFileParser::createPatchFromData(std::map<std::string, std::string> pa
 	return p;
 }
 
-void PatchFileParser::splitLine(std::string str, char splitChar, std::string& s1, std::string& s2)
-{
-	int splitIndex = str.find(splitChar);
-	s1 = str.substr(0, splitIndex);
-	s2 = str.substr(splitIndex + 1, str.size() - splitIndex - 2);
-}
-
-
-
-std::string PatchFileParser::getLine(std::ifstream& file)
+std::string PatchFileLoader::getLine(std::ifstream& file)
 {
 	char str[MAX_LINE_LEN];
 	file.getline(str, MAX_LINE_LEN);
 	return std::string(str);
 }
 
-void PatchFileParser::parseHeader(std::ifstream& file)
+void PatchFileLoader::parseHeader(std::ifstream& file)
 {
 	std::string s1, s2, line;
 
@@ -62,12 +53,12 @@ void PatchFileParser::parseHeader(std::ifstream& file)
 			break;
 		else
 		{
-			splitLine(line, '=', s1, s2);
+			StringHelper::splitLine(line, '=', s1, s2);
 		}
 	} while (!file.eof());
 }
 
-Patch PatchFileParser::parseInstrument(std::ifstream& file)
+Patch PatchFileLoader::parseInstrument(std::ifstream& file)
 {
 	std::map<std::string, std::string> instrumentData;
 	std::string s1, s2, line;
@@ -92,7 +83,7 @@ Patch PatchFileParser::parseInstrument(std::ifstream& file)
 		else if (line == "")
 			continue;
 
-		splitLine(line, '=', s1, s2);
+		StringHelper::splitLine(line, '=', s1, s2);
 		s1 = StringHelper::removeWhitespace(s1);
 
 		if (operatorNum >= 0 && nestingDepth > 1)
@@ -109,7 +100,7 @@ Patch PatchFileParser::parseInstrument(std::ifstream& file)
 	return createPatchFromData(instrumentData);
 }
 
-std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
+std::vector<Patch> PatchFileLoader::parseFile(std::ifstream& file)
 {
 	std::vector<Patch> patches;
 
@@ -132,7 +123,7 @@ std::vector<Patch> PatchFileParser::parseFile(std::ifstream& file)
 
 //------------------------------- PUBLIC --------------------------------//
 
-std::vector<Patch> PatchFileParser::loadPatchData(std::string filename)
+std::vector<Patch> PatchFileLoader::loadPatchData(std::string filename)
 {
 	std::ifstream patchFileStream(filename);
 	std::vector<Patch> loadedPatches;
