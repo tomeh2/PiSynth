@@ -130,14 +130,14 @@ std::vector<Patch> PatchFileLoader::loadPatchData(std::string filename)
 
 	if (!patchFileStream.is_open())
 	{
-		Logger::print((std::string("Could not open the given file! ") + filename).c_str());
+		Logger::print("Could not open the file. Filename: " + filename);
 	}
 	else
 	{
 		parseHeader(patchFileStream);
 		loadedPatches = parseFile(patchFileStream);
 
-		Logger::print((std::string("Successfully loaded ") + std::to_string(loadedPatches.size()) + " patches!").c_str());
+		Logger::print("Loaded " + std::to_string(loadedPatches.size()) + " patches");
 	}
 
 	return loadedPatches;

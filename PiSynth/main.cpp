@@ -4,7 +4,7 @@
 #include "Logger.h"
 #include "Renderer.h"
 #include "Patch.h"
-#include "PatchFileParser.h"
+#include "PatchFileLoader.h"
 
 #include "MidiFile.h"
 #include "MidiEvent.h"

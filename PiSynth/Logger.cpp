@@ -3,9 +3,7 @@
 #include <iostream>
 #include <ctime>
 
-using namespace std;
-
-string getCurrentTimeAsString()
+std::string getCurrentTimeAsString()
 {
 	char tm[10];		//holds current time as text
 	time_t now = time(0);
@@ -20,18 +18,7 @@ string getCurrentTimeAsString()
 	return std::string(tm);
 }
 
-void Logger::print(const char* message)
+void Logger::print(std::string message)
 {
-	cout << getCurrentTimeAsString() << " " << message << "\n";
-}
-
-//SAME LINE PRINT FORMATTED
-void Logger::slprint(const char* message)
-{
-	cout << getCurrentTimeAsString() << " " << message;
-}
-
-void Logger::nfprint(const char* message)
-{
-	cout << message;
+	std::cout << getCurrentTimeAsString() << " " << message << "\n";
 }

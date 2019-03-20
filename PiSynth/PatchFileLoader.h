@@ -54,6 +54,9 @@ public:
 	are returned as a vector which contains all the parsed patches.
 	The patches are indexed depending on the orden in which they were in 
 	the file, so the patch that is first in the file will be found at index 0.
+	
+	If no patches could be loaded the function will print the error message and
+	return a vector of size 0.
 
 	@param filename -> filename of the file which contains the patch data
 	@returns -> vector containing all loaded patches
