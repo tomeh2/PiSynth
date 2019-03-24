@@ -13,3 +13,8 @@ POSSIBLE SOLUTION: ADD A VECTOR THAT HOLDS THE CONSTRUCTS SO THAT THEY TOO
 CAN BE DELETED!!!!! (maybe)
 
 1st test : ~122.5 sec
+
+
+Temporary:
+- SoundEngine Constructor: only patch at the index of 0 is passed to the renderer
+- SoundEngine: temporary able to call process command. Will have in and out interfaces in the future

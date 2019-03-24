@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "Logger.h"
-#include "Renderer.h"
+#include "SoundEngine.h"
 #include "Patch.h"
 #include "PatchFileLoader.h"
 
@@ -46,7 +46,7 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(Renderer* v, MidiEventList& evnts)
+float* render(SoundEngine* v, MidiEventList& evnts)
 {
 	float* samples = new float[SAMPLES];
 	float dec = 0.0f;
@@ -115,10 +115,8 @@ int main()
 	file.sortTracks();
 	file.absoluteTicks();
 
-	vector<Patch> patches = PatchFileLoader::loadPatchData("/home/pi/Desktop/p2.ptch");
-	patches[0].printPatchData();
 	Clock::initialize(SR);
-	Renderer r(SR, 16, 32, patches[0]);
+	SoundEngine eng(SR, 16, 32, "/home/pi/Desktop/0.ptch");
 
 	ofstream out("/home/pi/Desktop/Shared/data.bin", ios::out | ios::binary);
 
@@ -131,7 +129,7 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 
-	float* samples = render(&r, file[0]);
+	float* samples = render(&eng, file[0]);
 
 	auto end = chrono::high_resolution_clock::now();
 

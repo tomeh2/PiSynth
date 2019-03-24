@@ -84,6 +84,7 @@
     <ClCompile Include="EnvelopeGenerator.cpp" />
     <ClCompile Include="FastMath.cpp" />
     <ClCompile Include="Feedback.cpp" />
+    <ClCompile Include="FileIn.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MidiEvent.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RtMidi.cpp" />
     <ClCompile Include="SineOscillator.cpp" />
+    <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="SquareOscillator.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="Voice.cpp" />
@@ -113,6 +115,8 @@
     <ClInclude Include="EnvelopeGenerator.h" />
     <ClInclude Include="FastMath.h" />
     <ClInclude Include="Feedback.h" />
+    <ClInclude Include="FileIn.h" />
+    <ClInclude Include="InputInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MidiEvent.h" />
     <ClInclude Include="MidiEventList.h" />
@@ -120,12 +124,14 @@
     <ClInclude Include="MidiMessage.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Oscillator.h" />
+    <ClInclude Include="OutputInterface.h" />
     <ClInclude Include="Parallel.h" />
     <ClInclude Include="Patch.h" />
     <ClInclude Include="PatchFileLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RtMidi.h" />
     <ClInclude Include="SineOscillator.h" />
+    <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="SquareOscillator.h" />
     <ClInclude Include="StringHelper.h" />
     <ClInclude Include="Voice.h" />

@@ -72,9 +72,11 @@
     <ClCompile Include="StringHelper.cpp">
       <Filter>File IO</Filter>
     </ClCompile>
+    <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="PatchFileLoader.cpp">
-      <Filter>File IO</Filter>
+      <Filter>File IO\Patch Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileIn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Signal Generation">
@@ -109,6 +111,15 @@
     </Filter>
     <Filter Include="File IO">
       <UniqueIdentifier>{d160cb2d-3b28-40d2-8d91-0d13f9e564e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="File IO\Patch Files">
+      <UniqueIdentifier>{de6aba4f-82f4-4a9f-a15d-872c04bb380f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SynthEngine\Data Streams">
+      <UniqueIdentifier>{2c7b2e4c-cd97-436e-84f5-564588c5f23d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SynthEngine\Data Streams\Interfaces">
+      <UniqueIdentifier>{491bba5c-03b7-4d9f-9207-b26190c6eea6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +199,17 @@
     <ClInclude Include="StringHelper.h">
       <Filter>File IO</Filter>
     </ClInclude>
+    <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="PatchFileLoader.h">
-      <Filter>File IO</Filter>
+      <Filter>File IO\Patch Files</Filter>
     </ClInclude>
+    <ClInclude Include="InputInterface.h">
+      <Filter>SynthEngine\Data Streams\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputInterface.h">
+      <Filter>SynthEngine\Data Streams\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIn.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />
