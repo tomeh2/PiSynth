@@ -9,6 +9,8 @@
 
 SoundEngine::SoundEngine(int sampleRate, int numChannels, int ppc, std::string patchFile)
 {
+	Clock::initialize(sampleRate);
+
 	std::vector<Patch> patches = PatchFileLoader::loadPatchData(patchFile);
 	if (patches.size() == 0)
 	{
@@ -81,7 +83,7 @@ void SoundEngine::mainLoop()
 	int currentTime = 0;
 	float buffer[BUFFER_SIZE] = { 0.f };
 
-	while (this->inputStream->isActive() && currentTime < 300000 && !this->interrupt)
+	while (this->inputStream->isActive() && currentTime < 100000 && !this->interrupt)
 	{
 		this->processInputs(currentTime);
 		this->calculateSamples(buffer, BUFFER_SIZE);
