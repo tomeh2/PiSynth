@@ -81,10 +81,12 @@
     <ClCompile Include="Cascade.cpp" />
     <ClCompile Include="Channel.cpp" />
     <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="EnvelopeGenerator.cpp" />
     <ClCompile Include="FastMath.cpp" />
     <ClCompile Include="Feedback.cpp" />
     <ClCompile Include="FileIn.cpp" />
+    <ClCompile Include="FileOut.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MidiEvent.cpp" />
@@ -112,10 +114,12 @@
     <ClInclude Include="Cascade.h" />
     <ClInclude Include="Channel.h" />
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="Encoder.h" />
     <ClInclude Include="EnvelopeGenerator.h" />
     <ClInclude Include="FastMath.h" />
     <ClInclude Include="Feedback.h" />
     <ClInclude Include="FileIn.h" />
+    <ClInclude Include="FileOut.h" />
     <ClInclude Include="InputInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MidiEvent.h" />
@@ -140,7 +144,16 @@
   <ItemGroup>
     <Text Include="Notes.txt" />
   </ItemGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Link>
+      <LibraryDependencies>pthread</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

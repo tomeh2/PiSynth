@@ -14,7 +14,9 @@ CAN BE DELETED!!!!! (maybe)
 
 1st test : ~122.5 sec
 
-
+Potential optimizations:
+- Add support for pre-calculated waveforms
+- Process data in blocks (for ex. 256 samples at a time) rather then one by one before it pretty much gets to the output.
 Temporary:
 - SoundEngine Constructor: only patch at the index of 0 is passed to the renderer
 - SoundEngine: temporary able to call process command. Will have in and out interfaces in the future

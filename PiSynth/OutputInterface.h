@@ -8,5 +8,6 @@ as the output to which the rendered samples will be written to.
 */
 class OutputInterface
 {
-	virtual void writeOut(float* samples, int size);
+public:
+	virtual void writeOut(float* samples, int size) = 0;
 };

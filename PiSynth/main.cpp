@@ -4,6 +4,8 @@
 #include "Logger.h"
 #include "SoundEngine.h"
 #include "Patch.h"
+#include "FileIn.h"
+#include "FileOut.h"
 #include "PatchFileLoader.h"
 
 #include "MidiFile.h"
@@ -18,10 +20,10 @@
 #include "FastMath.h"
 
 #define SR 44100
-#define RENDER_TIME 30
+#define RENDER_TIME 180
 #define SAMPLES 44100 * RENDER_TIME
 
-#define DEBUG 0
+#define DEBUG 2
 
 using namespace std;
 using namespace smf;
@@ -46,14 +48,41 @@ char* format(float* nums, int size)
 	return data;
 }
 
-float* render(SoundEngine* v, MidiEventList& evnts)
+float* render(SoundEngine* v, MidiEventList& evnts, InputInterface& inputStream)
 {
 	float* samples = new float[SAMPLES];
 	float dec = 0.0f;
+	int ind = 1, var = 0;
+	bool temp = true;
+#if DEBUG == 2
+	for (int i = 0; i < SAMPLES; i++)
+	{
+		if (temp && inputStream.isActive())
+		{
+			while (inputStream.ready(var))
+			{
+				smf::MidiEvent e = inputStream.getNextEvent();
+				//v->processCommand(e.getCommandByte() & 0xF0, e.getChannel(), e.getKeyNumber());
+				ind++;
+			}
+			temp = false;
+		}
 
+		samples[i] = v->getNextSample();
+		dec += 0.045f;
+
+		Clock::updateClock();
+
+		if (dec >= 1.0f)
+		{
+			dec -= 1.0f;
+			var++;
+			temp = true;
+		}
+	}
+#endif
 #if DEBUG == 1
 	MidiEvent e = evnts[0];
-	int ind = 1, var = 0;
 	for (int i = 0; i < SAMPLES; i++)
 	{
 		if (evnts[ind].tick < (int) var && ind < evnts.getSize() - 1)
@@ -108,6 +137,33 @@ float* render(SoundEngine* v, MidiEventList& evnts)
 
 int main()
 {
+	Clock::initialize(SR);
+	SoundEngine eng(SR, 16, 32, "/home/pi/Desktop/0.ptch");
+
+	InputInterface* in = new FileIn("/home/pi/Desktop/Shared/edited.mid");
+	OutputInterface* out = new FileOut("/home/pi/Desktop/Shared/data.bin");
+
+	auto start = chrono::high_resolution_clock::now();
+
+	eng.start(in, out);
+
+	auto end = chrono::high_resolution_clock::now();
+
+	auto dur = end - start;
+	auto ms = chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+
+	cout << "Time Elapsed: " << ms / 1000.0f << " sec\n";
+
+	cin.get();
+	
+	delete in;
+	delete out;
+
+	return 0;
+}
+
+int main2()
+{
 	MidiFile file;
 	file.read("/home/pi/Desktop/Shared/edited.mid");
 
@@ -129,7 +185,8 @@ int main()
 
 	auto start = chrono::high_resolution_clock::now();
 
-	float* samples = render(&eng, file[0]);
+	FileIn f("/home/pi/Desktop/Shared/edited.mid");
+	float* samples = render(&eng, file[0], f);
 
 	auto end = chrono::high_resolution_clock::now();
 

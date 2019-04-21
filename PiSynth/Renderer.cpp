@@ -35,11 +35,11 @@ void Renderer::processCommand(int type, int channel, int keyNum)
 	switch (type)
 	{
 	case 0x90:
-		//Logger::print(std::string("Command: Note On | Channel: " + std::to_string(channel + 1) + " | KeyNum: " + std::to_string(keyNum)).c_str());
+		Logger::print(std::string("Command: Note On | Channel: " + std::to_string(channel + 1) + " | KeyNum: " + std::to_string(keyNum)).c_str());
 		this->channels[channel]->keyDown(keyNum);
 		break;
 	case 0x80:
-		//Logger::print(std::string("Command: Note Off | Channel: " + std::to_string(channel + 1) + " | KeyNum: " + std::to_string(keyNum)).c_str());
+		Logger::print(std::string("Command: Note Off | Channel: " + std::to_string(channel + 1) + " | KeyNum: " + std::to_string(keyNum)).c_str());
 		this->channels[channel]->keyUp(keyNum);
 		break;
 	}

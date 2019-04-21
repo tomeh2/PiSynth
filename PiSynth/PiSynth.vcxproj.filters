@@ -72,11 +72,19 @@
     <ClCompile Include="StringHelper.cpp">
       <Filter>File IO</Filter>
     </ClCompile>
-    <ClCompile Include="SoundEngine.cpp" />
     <ClCompile Include="PatchFileLoader.cpp">
       <Filter>File IO\Patch Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileIn.cpp" />
+    <ClCompile Include="SoundEngine.cpp">
+      <Filter>SynthEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Encoder.cpp" />
+    <ClCompile Include="FileOut.cpp">
+      <Filter>SynthEngine\Data Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIn.cpp">
+      <Filter>SynthEngine\Data Streams</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Signal Generation">
@@ -199,7 +207,6 @@
     <ClInclude Include="StringHelper.h">
       <Filter>File IO</Filter>
     </ClInclude>
-    <ClInclude Include="SoundEngine.h" />
     <ClInclude Include="PatchFileLoader.h">
       <Filter>File IO\Patch Files</Filter>
     </ClInclude>
@@ -209,7 +216,16 @@
     <ClInclude Include="OutputInterface.h">
       <Filter>SynthEngine\Data Streams\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="FileIn.h" />
+    <ClInclude Include="SoundEngine.h">
+      <Filter>SynthEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Encoder.h" />
+    <ClInclude Include="FileOut.h">
+      <Filter>SynthEngine\Data Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="FileIn.h">
+      <Filter>SynthEngine\Data Streams</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Notes.txt" />

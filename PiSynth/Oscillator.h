@@ -22,14 +22,6 @@ protected:
 	float deltaTime = 0.0f;
 public:
 	virtual float process(float input) = 0;		//this is the function that implements signal generation
-	
-	void update()
-	{
-		this->time += deltaTime;
-
-		if (time >= TWO_PI)
-			time -= TWO_PI;
-	}
 
 	void setFrequency(float newFrequency)
 	{

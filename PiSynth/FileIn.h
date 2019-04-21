@@ -1,13 +1,25 @@
 #pragma once
-#include "OutputInterface.h"
 
-class FileIn : public OutputInterface
+#include "InputInterface.h"
+#include "MidiFile.h"
+
+#include <queue>
+
+class FileIn : public InputInterface
 {
+private:
+	std::queue<smf::MidiEvent> events;
+	smf::MidiFile midiFile;
+
+	bool errorStatus;
 public:
-	FileIn();
+	FileIn(std::string filename);
 	~FileIn();
 
-	void writeOut(float* samples, int size);
-	void setCurrentTimestamp();
+	bool status();
+	smf::MidiEvent getNextEvent();
+	void setTimestampPosition(int position);
+	bool isActive();
+	bool ready(int timestamp);
 };
 
