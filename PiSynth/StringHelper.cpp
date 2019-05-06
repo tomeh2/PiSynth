@@ -59,7 +59,7 @@ std::vector<float> StringHelper::strToFloatVector(std::string str, char splitAt)
 
 std::string StringHelper::removeWhitespace(std::string str)
 {
-	char temp[MAX_LINE_LEN];
+	char temp[MAX_LINE_LEN] = { 0 };
 
 	int strIndex = 0;
 	for (std::string::iterator it = str.begin(); it != str.end(); it++)

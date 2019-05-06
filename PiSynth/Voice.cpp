@@ -39,7 +39,7 @@ void Voice::keyDown(int keyNum)
 		for (int i = 0; i < opCount; i++)
 		{
 			operators[i]->setFrequency(pow(1.059463f, keyNum - 69) * 440.0f);
-			operators[i]->trigger();
+			operators[i]->trigger(keyNum);
 		}
 	}
 	else

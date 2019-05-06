@@ -21,7 +21,9 @@ Patch PatchFileLoader::createPatchFromData(std::map<std::string, std::string> pa
 	{
 		p.setFreqRatio(i, std::stof(patchData[std::string("freq_ratio") + std::to_string(i)]));
 		p.setOutputLevel(i, std::stof(patchData[std::string("out_lvl") + std::to_string(i)]));
-		p.setModulationSensitivity(i, std::stof(patchData[std::string("mod_sens") + std::to_string(i)]));
+
+		std::vector<float> scalingLimits = StringHelper::strToFloatVector(patchData[std::string("mod_sens_range") + std::to_string(i)], '-');
+		p.setModSensitivityScalingLimits(i, scalingLimits[0], scalingLimits[1]);
 
 		std::vector<float> envelopeRates = StringHelper::strToFloatVector(patchData[std::string("env_rate") + std::to_string(i)], ',');
 		std::vector<float> envelopeLevels = StringHelper::strToFloatVector(patchData[std::string("env_lvl") + std::to_string(i)], ',');

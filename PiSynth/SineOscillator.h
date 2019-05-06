@@ -5,7 +5,7 @@
 class SineOscillator : public Oscillator
 {
 public:
-	SineOscillator(int, float);
+	SineOscillator(int sampleRate, float frequency);
 	~SineOscillator();
 	
 	float process(float input);

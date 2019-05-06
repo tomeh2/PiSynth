@@ -115,7 +115,7 @@ void Channel::setNewPatch(Patch patch)
 		{
 			operators[j]->setFrequencyRatio(patch.getFreqRatio(j));
 			operators[j]->setOutputLevel(patch.getOutputLevel(j));
-			operators[j]->setModulationSensitivity(patch.getModulationSensitivity(j));
+			operators[j]->setModulationSensitivityRange(patch.getModSensitivityScalingLowLimit(j), patch.getModSensitivityScalingUpLimit(j));
 
 			for (int k = 0; k < patch.getEnvSegmentCount(j); k++)
 				operators[j]->addEnvelopePhase(patch.getCoefficients(j)[k], patch.getTargets(j)[k], patch.getHoldTimes(j)[k]);

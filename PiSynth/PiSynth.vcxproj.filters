@@ -66,9 +66,6 @@
     <ClCompile Include="EnvelopeGenerator.cpp">
       <Filter>Signal Generation\Envelope Generation</Filter>
     </ClCompile>
-    <ClCompile Include="Patch.cpp">
-      <Filter>SynthEngine</Filter>
-    </ClCompile>
     <ClCompile Include="StringHelper.cpp">
       <Filter>File IO</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="FileIn.cpp">
       <Filter>SynthEngine\Data Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Patch.cpp">
+      <Filter>File IO\Patch Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +201,6 @@
     <ClInclude Include="EnvelopeGenerator.h">
       <Filter>Signal Generation\Envelope Generation</Filter>
     </ClInclude>
-    <ClInclude Include="Patch.h">
-      <Filter>SynthEngine</Filter>
-    </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>File IO</Filter>
     </ClInclude>
@@ -225,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="FileIn.h">
       <Filter>SynthEngine\Data Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Patch.h">
+      <Filter>File IO\Patch Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

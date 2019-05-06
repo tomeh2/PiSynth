@@ -35,6 +35,12 @@ void Patch::setModulationSensitivity(int operatorID, float modulationSensitivity
 	this->modSens[operatorID] = modulationSensitivity;
 }
 
+void Patch::setModSensitivityScalingLimits(int operatorID, float lowerLimit, float upperLimit)
+{
+	this->modSensScalingLimits[operatorID].push_back(lowerLimit);
+	this->modSensScalingLimits[operatorID].push_back(upperLimit);
+}
+
 void Patch::addEnvelopeSegment(int operatorID, float speed, float targetVal, float holdTime)
 {
 	this->expCoeffs[operatorID].push_back(speed);
@@ -65,6 +71,16 @@ float Patch::getOutputLevel(int operatorID)
 float Patch::getModulationSensitivity(int operatorID)
 {
 	return this->modSens[operatorID];
+}
+
+float Patch::getModSensitivityScalingLowLimit(int operatorID)
+{
+	return this->modSensScalingLimits[operatorID][0];
+}
+
+float Patch::getModSensitivityScalingUpLimit(int operatorID)
+{
+	return this->modSensScalingLimits[operatorID][1];
 }
 
 int Patch::getEnvSegmentCount(int operatorID)
@@ -98,6 +114,8 @@ void Patch::printPatchData()
 		std::cout << "------------ OPERATOR " << i << " ------------\n";
 		std::cout << "Frequency Ratio: " << this->freqRatios[i] << "\n";
 		std::cout << "Output Level: " << this->outputLevels[i] << "\n";
+		std::cout << "Modulation Sensitivity: " << this->modSens[i] << "\n";
+		std::cout << "Mod. Sensitivity Scaling Low | High: " << this->modSensScalingLimits[i][0] << " | " << this->modSensScalingLimits[i][1] << "\n";
 
 		std::cout << "Exponential Coefficients: ";
 		for (int j = 0; j < this->expCoeffs[i].size(); j++)

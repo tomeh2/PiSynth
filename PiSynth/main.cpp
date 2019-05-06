@@ -12,7 +12,7 @@
 
 int main()
 {
-	SoundEngine eng(SR, 16, 32, "/home/pi/Desktop/0.ptch");
+	SoundEngine eng(SR, 16, 32, "/home/pi/Desktop/p3.ptch");
 
 	InputInterface* in = new FileIn("/home/pi/Desktop/Shared/edited.mid");
 	OutputInterface* out = new FileOut("/home/pi/Desktop/Shared/data.bin");

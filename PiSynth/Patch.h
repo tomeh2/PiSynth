@@ -14,6 +14,7 @@ private:
 	std::map<int, float> freqRatios;
 	std::map<int, float> outputLevels;
 	std::map<int, float> modSens;
+	std::map<int, std::vector<float>> modSensScalingLimits;
 	//ENVELOPE GENERATOR DATA
 	std::map<int, std::vector<float>> expCoeffs;
 	std::map<int, std::vector<float>> targetVals;
@@ -31,6 +32,7 @@ public:
 	void setFreqRatio(int operatorID, float freqRatio);
 	void setOutputLevel(int operatorID, float outputLevel);
 	void setModulationSensitivity(int operatorID, float modulationSensitivity);
+	void setModSensitivityScalingLimits(int operatorID, float lowerLimit, float upperLimit);
 	//ENVELOPE GENERATOR DATA
 	void addEnvelopeSegment(int operatorID, float speed, float targetVal, float holdTime);
 
@@ -42,6 +44,8 @@ public:
 	float getFreqRatio(int operatorID);
 	float getOutputLevel(int operatorID);
 	float getModulationSensitivity(int operatorID);
+	float getModSensitivityScalingLowLimit(int operatorID);
+	float getModSensitivityScalingUpLimit(int operatorID);
 	//ENVELOPE GENERATOR DATA
 	int getEnvSegmentCount(int operatorID);
 	std::vector<float> getCoefficients(int operatorID);

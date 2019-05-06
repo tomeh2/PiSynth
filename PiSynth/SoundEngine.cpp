@@ -18,6 +18,8 @@ SoundEngine::SoundEngine(int sampleRate, int numChannels, int ppc, std::string p
 		patches = PatchFileLoader::loadPatchData(PATCH_FILE_DEFAULT);
 	}
 
+	patches[0].printPatchData();
+
 	this->audioRenderer = new Renderer(sampleRate, numChannels, ppc, patches[0]);
 }
 
@@ -83,7 +85,7 @@ void SoundEngine::mainLoop()
 	int currentTime = 0;
 	float buffer[BUFFER_SIZE] = { 0.f };
 
-	while (this->inputStream->isActive() && currentTime < 100000 && !this->interrupt)
+	while (this->inputStream->isActive() && currentTime < 50000 && !this->interrupt)
 	{
 		this->processInputs(currentTime);
 		this->calculateSamples(buffer, BUFFER_SIZE);

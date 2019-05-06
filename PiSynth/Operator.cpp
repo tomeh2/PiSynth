@@ -27,9 +27,10 @@ void Operator::setOutputLevel(float outLevel)
 	this->outputLevel = outLevel;
 }
 
-void Operator::setModulationSensitivity(float newModSens)
+void Operator::setModulationSensitivityRange(float lowerLimit, float upperLimit)
 {
-	this->waveGenerator->setModulationSensitivity(newModSens);
+	this->modSensLowerLimit = lowerLimit;
+	this->modSensUpperLimit = upperLimit;
 }
 
 void Operator::setFrequencyRatio(float newRatio)
@@ -54,8 +55,12 @@ void Operator::addEnvelopePhase(float expCoeff, float targetVal, float holdTime)
 	this->envelopeGenerator->addNewStateP(expCoeff, targetVal, holdTime);
 }
 
-void Operator::trigger()
+void Operator::trigger(int keyNum)
 {
+	float modSens = ((this->modSensUpperLimit - this->modSensLowerLimit) / 126) * (keyNum - 1) + this->modSensLowerLimit;
+
+	this->waveGenerator->setModulationSensitivity(modSens);
+
 	this->envelopeGenerator->trigger();
 }
 
